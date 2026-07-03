@@ -211,31 +211,31 @@ const Login = () => {
       }
     }
     // OPERATION MANAGER LOGIN
+    const { data: opsUser } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", username)
+      .eq("role", "ops")
+      .single();
 
-    if (password === "Ops@123") {
-
-      const { data: opsUser } = await supabase
-        .from("users")
-        .select("*")
-        .eq("email", username)
-        .eq("role", "ops")
-        .single();
-
-      if (opsUser) {
-
-        localStorage.setItem(
-          "kpc_session",
-          JSON.stringify({
-            role: "ops",
-            userId: opsUser.id,
-            userName: opsUser.name,
-            email: opsUser.email
-          })
-        );
-
-        navigate("/ops/dashboard");
+    if (opsUser) {
+      if (password !== opsUser.password_hash && password !== "Ops@123") {
+        setError("Invalid username or password");
         return;
       }
+
+      localStorage.setItem(
+        "kpc_session",
+        JSON.stringify({
+          role: "ops",
+          userId: opsUser.id,
+          userName: opsUser.name,
+          email: opsUser.email
+        })
+      );
+
+      navigate("/ops/dashboard");
+      return;
     }
 
     setError("Invalid username or password");

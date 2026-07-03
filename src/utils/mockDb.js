@@ -125,6 +125,121 @@ const INITIAL_CLIENTS = [
     timeline: [
       { event: 'Client Onboarded', user: 'Operations Manager', date: '2025-07-10T10:00:00.000Z' }
     ]
+  },
+  {
+    id: 'C-006',
+    name: 'Nexus Corp',
+    hq: 'Chennai',
+    industry: 'Healthcare',
+    gstNumber: '33AABCN1111F1Z1',
+    contactPerson: 'Karan Mehra',
+    contactEmail: 'karan@nexuscorp.in',
+    contactPhone: '9876522222',
+    billingContact: 'Anjali Desai',
+    billingEmail: 'billing@nexuscorp.in',
+    billingPhone: '9876522223',
+    services: ['Background Verification', 'Identity Verification'],
+    rateCard: { 'Background Verification': 1500, 'Identity Verification': 300 },
+    status: 'Active',
+    createdDate: '2025-08-12T10:00:00.000Z',
+    hrAccounts: [
+      { id: 'HR-008', name: 'Rohan Gupta', email: 'rohan@nexuscorp.in', role: 'Primary HR', status: 'Active', lastLogin: '2026-06-11T09:30:00.000Z' }
+    ],
+    timeline: [
+      { event: 'Client Onboarded', user: 'Operations Manager', date: '2025-08-12T10:00:00.000Z' }
+    ]
+  },
+  {
+    id: 'C-007',
+    name: 'Alpha Logistics',
+    hq: 'Noida',
+    industry: 'Logistics',
+    gstNumber: '09AABCA2222G2Z2',
+    contactPerson: 'Simran Kaur',
+    contactEmail: 'simran@alphalogistics.in',
+    contactPhone: '9876533333',
+    billingContact: 'Amit Singh',
+    billingEmail: 'finance@alphalogistics.in',
+    billingPhone: '9876533334',
+    services: ['Police Verification', 'Address Verification'],
+    rateCard: { 'Police Verification': 500, 'Address Verification': 800 },
+    status: 'Active',
+    createdDate: '2025-09-05T10:00:00.000Z',
+    hrAccounts: [
+      { id: 'HR-009', name: 'Vivek Sharma', email: 'vivek@alphalogistics.in', role: 'Primary HR', status: 'Active', lastLogin: '2026-06-13T10:00:00.000Z' }
+    ],
+    timeline: [
+      { event: 'Client Onboarded', user: 'Operations Manager', date: '2025-09-05T10:00:00.000Z' }
+    ]
+  },
+  {
+    id: 'C-008',
+    name: 'Pinnacle Edu',
+    hq: 'Kolkata',
+    industry: 'Education',
+    gstNumber: '19AABCP3333H3Z3',
+    contactPerson: 'Aditi Bose',
+    contactEmail: 'aditi@pinnacleedu.in',
+    contactPhone: '9876544444',
+    billingContact: 'Rahul Roy',
+    billingEmail: 'accounts@pinnacleedu.in',
+    billingPhone: '9876544445',
+    services: ['Identity Verification', 'Background Verification'],
+    rateCard: { 'Identity Verification': 300, 'Background Verification': 1200 },
+    status: 'Active',
+    createdDate: '2025-10-20T10:00:00.000Z',
+    hrAccounts: [
+      { id: 'HR-010', name: 'Snehasish Sen', email: 'snehasish@pinnacleedu.in', role: 'Primary HR', status: 'Active', lastLogin: '2026-06-14T11:20:00.000Z' }
+    ],
+    timeline: [
+      { event: 'Client Onboarded', user: 'Operations Manager', date: '2025-10-20T10:00:00.000Z' }
+    ]
+  },
+  {
+    id: 'C-009',
+    name: 'Quantum Tech',
+    hq: 'Gurgaon',
+    industry: 'IT Services',
+    gstNumber: '06AABCQ4444I4Z4',
+    contactPerson: 'Nitin Jain',
+    contactEmail: 'nitin@quantumtech.in',
+    contactPhone: '9876555555',
+    billingContact: 'Priya Ahuja',
+    billingEmail: 'billing@quantumtech.in',
+    billingPhone: '9876555556',
+    services: ['Address Verification', 'Identity Verification', 'Police Verification'],
+    rateCard: { 'Address Verification': 800, 'Identity Verification': 300, 'Police Verification': 500 },
+    status: 'Active',
+    createdDate: '2025-11-15T10:00:00.000Z',
+    hrAccounts: [
+      { id: 'HR-011', name: 'Manish Kumar', email: 'manish@quantumtech.in', role: 'Primary HR', status: 'Active', lastLogin: '2026-06-15T09:15:00.000Z' }
+    ],
+    timeline: [
+      { event: 'Client Onboarded', user: 'Operations Manager', date: '2025-11-15T10:00:00.000Z' }
+    ]
+  },
+  {
+    id: 'C-010',
+    name: 'Zeith Pharma',
+    hq: 'Ahmedabad',
+    industry: 'Pharmaceuticals',
+    gstNumber: '24AABCZ5555J5Z5',
+    contactPerson: 'Saurabh Patel',
+    contactEmail: 'saurabh@zeithpharma.in',
+    contactPhone: '9876566666',
+    billingContact: 'Bhavna Shah',
+    billingEmail: 'finance@zeithpharma.in',
+    billingPhone: '9876566667',
+    services: ['Background Verification', 'Police Verification'],
+    rateCard: { 'Background Verification': 1500, 'Police Verification': 500 },
+    status: 'Active',
+    createdDate: '2025-12-01T10:00:00.000Z',
+    hrAccounts: [
+      { id: 'HR-012', name: 'Kiran Desai', email: 'kiran@zeithpharma.in', role: 'Primary HR', status: 'Active', lastLogin: '2026-06-16T10:45:00.000Z' }
+    ],
+    timeline: [
+      { event: 'Client Onboarded', user: 'Operations Manager', date: '2025-12-01T10:00:00.000Z' }
+    ]
   }
 ];
 

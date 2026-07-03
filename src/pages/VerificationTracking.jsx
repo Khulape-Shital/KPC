@@ -407,7 +407,7 @@ export const VerificationTracking = () => {
                   {/* Kanban Cards */}
                   <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px', overflowY: 'auto', flex: 1 }}>
                     {columnData.map(item => {
-                      const colors = getSlaColors(item.sla);
+                      const colors = getSlaStyle(item.sla);
                       return (
                         <div key={item.id} className="card" onClick={() => setModalData(item)} style={{ padding: '16px', borderRadius: '16px', cursor: 'pointer', border: `1px solid ${colors.border}`, backgroundColor: '#ffffff', transition: 'all 0.2s ease', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }} onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.05)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)'; }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>

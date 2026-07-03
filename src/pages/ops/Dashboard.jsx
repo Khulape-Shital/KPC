@@ -10,7 +10,9 @@ export const Dashboard = () => {
     activeVerifications: 0,
     completedToday: 0,
     escalations: 0,
-    slaBreached: 0
+    slaBreached: 0,
+    totalVerifications: 0,
+    completedVerifications: 0
   });
 
 
@@ -89,7 +91,9 @@ export const Dashboard = () => {
         activeVerifications: active.length,
         completedToday: completedTodayCount,
         escalations: escalated.length,
-        slaBreached: breached
+        slaBreached: breached,
+        totalVerifications: employees.length,
+        completedVerifications: employees.filter(e => ['completed', 'approved'].includes((e.status || '').toLowerCase())).length
       });
 
       setRecentActivity(activities.slice(0, 10)); // Top 10 recent
@@ -113,6 +117,10 @@ export const Dashboard = () => {
         100
       )
       : 0;
+  const completionRate = metrics.totalVerifications > 0 
+    ? Math.round((metrics.completedVerifications / metrics.totalVerifications) * 100) 
+    : 0;
+
   return (
     <div className="page-container" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px', animation: 'fadeIn 0.5s ease-out' }}>
 
@@ -141,7 +149,7 @@ export const Dashboard = () => {
         </div>
 
         <div className="card metric-card" onClick={() => navigate('/ops/forms')} style={{ padding: '24px', cursor: 'pointer', background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)', position: 'relative', overflow: 'hidden' }}>
-           <div style={{ position: 'absolute', top: 0, right: 0, width: '100px', height: '100px', background: 'radial-gradient(circle, rgba(139,92,246,0.05) 0%, rgba(255,255,255,0) 70%)', transform: 'translate(30%, -30%)' }}></div>
+          <div style={{ position: 'absolute', top: 0, right: 0, width: '100px', height: '100px', background: 'radial-gradient(circle, rgba(139,92,246,0.05) 0%, rgba(255,255,255,0) 70%)', transform: 'translate(30%, -30%)' }}></div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
             <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Active Verifications</div>
             <div style={{ width: '40px', height: '40px', borderRadius: '12px', backgroundColor: '#f3e8ff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(139,92,246,0.1)' }}><ShieldCheck size={20} color="#8b5cf6" /></div>
@@ -159,7 +167,7 @@ export const Dashboard = () => {
         </div>
 
         <div className="card metric-card" onClick={() => navigate('/ops/tracking')} style={{ padding: '24px', cursor: 'pointer', background: 'linear-gradient(135deg, #ffffff 0%, #fef2f2 100%)', position: 'relative', overflow: 'hidden', borderColor: '#fee2e2' }}>
-           <div style={{ position: 'absolute', top: 0, right: 0, width: '100px', height: '100px', background: 'radial-gradient(circle, rgba(239,68,68,0.05) 0%, rgba(255,255,255,0) 70%)', transform: 'translate(30%, -30%)' }}></div>
+          <div style={{ position: 'absolute', top: 0, right: 0, width: '100px', height: '100px', background: 'radial-gradient(circle, rgba(239,68,68,0.05) 0%, rgba(255,255,255,0) 70%)', transform: 'translate(30%, -30%)' }}></div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
             <div style={{ fontSize: '13px', fontWeight: 600, color: '#b91c1c', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Overdue (30 Mins)</div>
             <div style={{ width: '40px', height: '40px', borderRadius: '12px', backgroundColor: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(239,68,68,0.1)' }}><Clock size={20} color="#ef4444" /></div>
@@ -170,12 +178,12 @@ export const Dashboard = () => {
 
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
         {/* RECENT ACTIVITY LOG */}
-        <div className="card" style={{ padding: '24px', backgroundColor: '#fff' , borderRadius: '22px'}}>
+        <div className="card" style={{ padding: '24px', backgroundColor: '#fff', borderRadius: '22px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <h2 style={{ fontSize: '35px', fontWeight: 700, color: '#123178ff', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <TrendingUp size={18} color="var(--primary-blue)" /> Platform Activity Stream
             </h2>
-            <button className="btn btn-outline" style={{ padding: '4px 8px', fontSize: '12px' }} onClick={() => navigate('/ops/tracking')}>View Full Log</button>
+            {/* <button className="btn btn-outline" style={{ padding: '4px 8px', fontSize: '12px' }} onClick={() => navigate('/ops/tracking')}>View Full Log</button> */}
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -237,7 +245,7 @@ export const Dashboard = () => {
               display: "flex",
               flexDirection: "column",
               gap: "16px",
-              fontSize:"12px"
+              fontSize: "12px"
             }}
           >
             <div>
@@ -260,7 +268,7 @@ export const Dashboard = () => {
 
                 <span
                   style={{
-                    fontSize:'22px',
+                    fontSize: '22px',
                     fontWeight: 700,
                     color: "#10b981"
                   }}
@@ -279,7 +287,7 @@ export const Dashboard = () => {
               >
                 <div
                   style={{
-                    
+
                     height: "100%",
                     width: `${slaSuccess}%`,
                     backgroundColor: "#10b981"
@@ -316,7 +324,7 @@ export const Dashboard = () => {
                   color: "var(--primary-blue)"
                 }}
               >
-                94%
+                {completionRate}%
               </span>
             </div>
 
