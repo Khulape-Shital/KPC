@@ -228,7 +228,7 @@ button {
 }
 
 .sidebar {
-  width: 360px;
+  width: 280px;
   background-color: var(--bg-sidebar);
   border-right: 1px solid var(--border-color);
   display: flex;

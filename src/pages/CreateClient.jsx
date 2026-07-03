@@ -9,11 +9,8 @@ import { supabase } from '../utils/supabase';
 
 const INDUSTRIES = ['IT Services', 'Finance', 'Manufacturing', 'Healthcare', 'Banking & Finance', 'Consulting', 'Retail', 'Education'];
 const ALL_SERVICES = [
-  { id: 'Identity Verification', name: 'Identity Verification', desc: 'Aadhaar & PAN validation' },
-  { id: 'Address Verification', name: 'Address Verification', desc: 'Physical address check via utility bill / rent agreement' },
+  { id: 'Background Verification', name: 'Background Verification', desc: 'Academic & corporate credential audit' },
   { id: 'Police Verification', name: 'Police Verification', desc: 'Criminal record & law enforcement check' },
-  // { id: 'Background Verification', name: 'Background Verification', desc: 'Academic & corporate credential audit', defaultRate: 1500 },
-  // { id: 'Other Services', name: 'Other Services', desc: 'Custom or supplementary checks', defaultRate: 2000 },
 ];
 
 export const CreateClient = () => {

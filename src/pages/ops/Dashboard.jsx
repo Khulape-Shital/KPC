@@ -3,6 +3,7 @@ import { Users, Building2, ShieldCheck, AlertTriangle, TrendingUp, Target, Activ
 import { getSupabaseEmployees, getSupabaseClients } from '../../utils/supabase';
 import { mockDb } from '../../utils/mockDb';
 import { useNavigate } from 'react-router-dom';
+import PageHeader from '../../components/common/PageHeader';
 
 export const Dashboard = () => {
   const [metrics, setMetrics] = useState({
@@ -15,8 +16,7 @@ export const Dashboard = () => {
     completedVerifications: 0
   });
 
-
-
+  const [projects, setProjects] = useState([]);
   const [recentActivity, setRecentActivity] = useState([]);
   const navigate = useNavigate();
 
@@ -96,6 +96,22 @@ export const Dashboard = () => {
         completedVerifications: employees.filter(e => ['completed', 'approved'].includes((e.status || '').toLowerCase())).length
       });
 
+      const projectStats = clients.map(client => {
+        const clientEmployees = employees.filter(e => e.company === client.company_name || e.companyId === client.id);
+        const completedCount = clientEmployees.filter(e => ['completed', 'approved'].includes((e.status || '').toLowerCase())).length;
+        const totalCount = clientEmployees.length;
+        
+        return {
+          id: client.id,
+          name: client.company_name || 'Unknown',
+          industry: client.industry || 'Unknown',
+          services: 'Identity Verification', // Default or placeholder
+          completedCount,
+          totalCount,
+        };
+      });
+      setProjects(projectStats);
+
       setRecentActivity(activities.slice(0, 10)); // Top 10 recent
     };
 
@@ -125,17 +141,11 @@ export const Dashboard = () => {
     <div className="page-container" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px', animation: 'fadeIn 0.5s ease-out' }}>
 
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div>
-          <h1 style={{ fontSize: '36px', fontWeight: 700, color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Activity size={26} color="var(--primary-blue)" />
-            Operations Dashboard
-          </h1>
-          <p style={{ color: 'var(--text-gray)', marginTop: '6px', fontSize: '18px' }}>
-            Overview of overall platform health, verification volumes, and real-time operations.
-          </p>
-        </div>
-      </div>
+      <PageHeader 
+        title="Operations Dashboard"
+        subtitle="Overview of overall platform health, verification volumes, and real-time operations."
+        icon={Activity}
+      />
 
       {/* METRIC CARDS */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', animation: 'fadeIn 0.6s ease-out forwards' }}>
@@ -145,7 +155,7 @@ export const Dashboard = () => {
             <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Clients</div>
             <div style={{ width: '40px', height: '40px', borderRadius: '12px', backgroundColor: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(59,130,246,0.1)' }}><Building2 size={20} color="#3b82f6" /></div>
           </div>
-          <div style={{ fontSize: '36px', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1 }}>{metrics.totalClients}</div>
+          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1 }}>{metrics.totalClients}</div>
         </div>
 
         <div className="card metric-card" onClick={() => navigate('/ops/forms')} style={{ padding: '24px', cursor: 'pointer', background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)', position: 'relative', overflow: 'hidden' }}>
@@ -154,7 +164,7 @@ export const Dashboard = () => {
             <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Active Verifications</div>
             <div style={{ width: '40px', height: '40px', borderRadius: '12px', backgroundColor: '#f3e8ff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(139,92,246,0.1)' }}><ShieldCheck size={20} color="#8b5cf6" /></div>
           </div>
-          <div style={{ fontSize: '36px', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1 }}>{metrics.activeVerifications}</div>
+          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1 }}>{metrics.activeVerifications}</div>
         </div>
 
         <div className="card metric-card" style={{ padding: '24px', background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)', position: 'relative', overflow: 'hidden' }}>
@@ -163,7 +173,7 @@ export const Dashboard = () => {
             <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Completed Today</div>
             <div style={{ width: '40px', height: '40px', borderRadius: '12px', backgroundColor: '#ecfdf5', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(16,185,129,0.1)' }}><CheckCircle2 size={20} color="#10b981" /></div>
           </div>
-          <div style={{ fontSize: '36px', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1 }}>{metrics.completedToday}</div>
+          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1 }}>{metrics.completedToday}</div>
         </div>
 
         <div className="card metric-card" onClick={() => navigate('/ops/tracking')} style={{ padding: '24px', cursor: 'pointer', background: 'linear-gradient(135deg, #ffffff 0%, #fef2f2 100%)', position: 'relative', overflow: 'hidden', borderColor: '#fee2e2' }}>
@@ -172,43 +182,40 @@ export const Dashboard = () => {
             <div style={{ fontSize: '13px', fontWeight: 600, color: '#b91c1c', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Overdue (30 Mins)</div>
             <div style={{ width: '40px', height: '40px', borderRadius: '12px', backgroundColor: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(239,68,68,0.1)' }}><Clock size={20} color="#ef4444" /></div>
           </div>
-          <div style={{ fontSize: '36px', fontWeight: 700, color: '#ef4444', lineHeight: 1 }}>{metrics.slaBreached}</div>
+          <div style={{ fontSize: '28px', fontWeight: 700, color: '#ef4444', lineHeight: 1 }}>{metrics.slaBreached}</div>
         </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
-        {/* RECENT ACTIVITY LOG */}
+        {/* PROJECT SNAPSHOT WIDGET */}
         <div className="card" style={{ padding: '24px', backgroundColor: '#fff', borderRadius: '22px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h2 style={{ fontSize: '35px', fontWeight: 700, color: '#123178ff', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <TrendingUp size={18} color="var(--primary-blue)" /> Platform Activity Stream
+            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#123178ff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Building2 size={18} color="var(--primary-blue)" /> Project Snapshot
             </h2>
-            {/* <button className="btn btn-outline" style={{ padding: '4px 8px', fontSize: '12px' }} onClick={() => navigate('/ops/tracking')}>View Full Log</button> */}
+            <button className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '13px' }} onClick={() => navigate('/ops/clients')}>View All Projects</button>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {recentActivity.length === 0 ? (
-              <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-gray)', fontSize: '24px' }}>No recent activity to display.</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxHeight: '420px', overflowY: 'auto', paddingRight: '8px' }}>
+            {projects.length === 0 ? (
+              <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-gray)', fontSize: '14px' }}>No ongoing projects to display.</div>
             ) : (
-              recentActivity.map((act, idx) => (
-                <div key={idx} style={{ display: 'flex', gap: '12px', paddingBottom: '16px', borderBottom: idx !== recentActivity.length - 1 ? '1px solid var(--border-color)' : 'none' }}>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
-                    {getEventIcon(act.event)}
+              projects.map((proj, idx) => (
+                <div key={idx} style={{ padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#f8fafc', transition: 'all 0.2s', cursor: 'pointer' }} onClick={() => navigate(`/ops/clients/${proj.id}`)}>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Building2 size={20} color="#3b82f6" />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-dark)' }}>{proj.name}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '2px' }}>Service Taken: {proj.services}</div>
+                    </div>
                   </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                      <div style={{ fontSize: '24px', fontWeight: 600, color: 'var(--text-dark)' }}>{act.event}</div>
-                      <div style={{ fontSize: '18px', color: 'var(--text-gray)' }}>{new Date(act.date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--primary-blue)' }}>
+                      {proj.completedCount} <span style={{ fontSize: '13px', color: 'var(--text-gray)', fontWeight: 500 }}>/ {proj.totalCount}</span>
                     </div>
-                    <div style={{ fontSize: '20px', color: 'var(--text-gray)', marginTop: '2px' }}>
-                      <span style={{ fontWeight: 500, color: 'var(--text-dark)' }}>{act.empName}</span> ({act.empId}) • {act.company}
-                    </div>
-                    {act.details && (
-                      <div style={{ fontSize: '22px', color: 'var(--text-gray)', marginTop: '4px', fontStyle: 'italic' }}>
-                        "{act.details}"
-                      </div>
-                    )}
-                    <div style={{ fontSize: '20px', color: 'var(--text-light)', marginTop: '4px' }}>By: {act.user}</div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-gray)' }}>Completed</div>
                   </div>
                 </div>
               ))
@@ -216,18 +223,41 @@ export const Dashboard = () => {
           </div>
         </div>
 
-        <div
-          className="card"
-          style={{
-            padding: "20px",
-            backgroundColor: "#fff",
-            alignSelf: "start",
-            height: "fit-content"
-          }}
-        >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          {/* QUICK ACTIONS WIDGET */}
+          <div className="card" style={{ padding: '20px', backgroundColor: '#fff' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-dark)', marginBottom: '16px' }}>Quick Actions</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <button 
+                className="btn btn-primary" 
+                onClick={() => navigate('/ops/clients/create')} 
+                style={{ width: '100%', padding: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+              >
+                <Building2 size={18} /> Create Client
+              </button>
+              <button 
+                className="btn btn-outline" 
+                onClick={() => navigate('/ops/forms')} 
+                style={{ width: '100%', padding: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', border: '1px solid var(--primary-blue)', color: 'var(--primary-blue)' }}
+              >
+                <Users size={18} /> Add Employee
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="card"
+            style={{
+              padding: "20px",
+              backgroundColor: "#fff",
+              alignSelf: "start",
+              height: "fit-content",
+              width: "100%"
+            }}
+          >
           <h3
             style={{
-              fontSize: "30px",
+              fontSize: "18px",
               fontWeight: 600,
               color: "var(--text-dark)",
               marginBottom: "16px",
@@ -236,7 +266,7 @@ export const Dashboard = () => {
               gap: "8px"
             }}
           >
-            <TrendingUp size={38} color="var(--primary-blue)" />
+            <TrendingUp size={20} color="var(--primary-blue)" />
             Performance Analytics
           </h3>
 
@@ -258,7 +288,7 @@ export const Dashboard = () => {
               >
                 <span
                   style={{
-                    fontSize: "22px",
+                    fontSize: "14px",
                     fontWeight: 600,
                     color: "var(--text-gray)"
                   }}
@@ -268,7 +298,7 @@ export const Dashboard = () => {
 
                 <span
                   style={{
-                    fontSize: '22px',
+                    fontSize: '14px',
                     fontWeight: 700,
                     color: "#10b981"
                   }}
@@ -309,7 +339,7 @@ export const Dashboard = () => {
             >
               <span
                 style={{
-                  fontSize: "22px",
+                  fontSize: "14px",
                   fontWeight: 600,
                   color: "var(--text-gray)"
                 }}
@@ -319,7 +349,7 @@ export const Dashboard = () => {
 
               <span
                 style={{
-                  fontSize: "22px",
+                  fontSize: "14px",
                   fontWeight: 700,
                   color: "var(--primary-blue)"
                 }}
@@ -356,7 +386,7 @@ export const Dashboard = () => {
               <div>
                 <div
                   style={{
-                    fontSize: "25px",
+                    fontSize: "14px",
                     color: "var(--text-gray)"
                   }}
                 >
@@ -376,31 +406,6 @@ export const Dashboard = () => {
             </div>
           </div>
         </div>
-        {/* QUICK ACTIONS & NOTICES */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          {/* <div className="card" style={{ padding: '20px', backgroundColor: '#fff' }}>
-            <h2 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '16px' }}>Quick Actions</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <button className="btn btn-primary" onClick={() => navigate('/ops/clients')} style={{ display: 'flex', justifyContent: 'flex-start', padding: '12px', backgroundColor: '#f8fafc', color: 'var(--text-dark)', border: '1px solid var(--border-color)' }}>
-                Add New Client
-              </button>
-              <button className="btn btn-primary" onClick={() => navigate('/ops/monitoring')} style={{ display: 'flex', justifyContent: 'flex-start', padding: '12px', backgroundColor: '#f8fafc', color: 'var(--text-dark)', border: '1px solid var(--border-color)' }}>
-                Rebalance Workloads
-              </button>
-              <button className="btn btn-primary" onClick={() => navigate('/ops/tracking')} style={{ display: 'flex', justifyContent: 'flex-start', padding: '12px', backgroundColor: '#f8fafc', color: 'var(--text-dark)', border: '1px solid var(--border-color)' }}>
-                Review SLA Breaches
-              </button>
-            </div>
-          </div> */}
-
-          {/* <div className="card" style={{ padding: '20px', backgroundColor: '#eff6ff', border: '1px solid #bfdbfe' }}>
-            <h2 style={{ fontSize: '14px', fontWeight: 700, color: '#1e3a8a', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <AlertTriangle size={16} /> System Notice
-            </h2>
-            <p style={{ fontSize: '13px', color: '#1e40af', lineHeight: '1.5' }}>
-              The verification tracking dashboard now includes real-time database syncing. Reports module has been deprecated and merged into the Tracking and Monitoring dashboards for centralized access.
-            </p>
-          </div> */}
         </div>
       </div>
     </div>

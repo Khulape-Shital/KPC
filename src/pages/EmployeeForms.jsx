@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../utils/supabase';
 import * as XLSX from "xlsx";
 import { Download, Layers, Search, Calendar, Eye, CheckCircle2, XCircle, FileText, ChevronDown, X, Clock, User, CheckSquare, AlertCircle, History, Trash2 } from 'lucide-react';
-
+import PageHeader from '../components/common/PageHeader';
 const DOC_TYPES = [
   { id: 'Aadhaar Card', label: 'A', tooltip: 'Aadhaar Card' },
   { id: 'PAN Card', label: 'P', tooltip: 'PAN Card' },
@@ -364,8 +364,11 @@ export const EmployeeForms = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
-          <h1 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '4px' }}>Employee Forms</h1>
-          <p style={{ color: 'var(--text-gray)', fontSize: '14px' }}>Manage and monitor employee verification submissions.</p>
+          <PageHeader 
+            title="Employee Forms" 
+            subtitle="Manage and monitor employee verification submissions."
+            icon={FileText}
+          />
         </div>
         <div style={{ display: 'flex', gap: '12px', position: 'relative' }}>
           <button

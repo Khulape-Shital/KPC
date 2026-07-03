@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import {
   PlusCircle, Clock, AlertTriangle, CheckCircle2,
   Users, FileText, ArrowRight, TrendingUp,
-  Layers, CheckSquare, BellRing, Calendar, ChevronRight,
+  Layers, CheckSquare, BellRing, Calendar, ChevronRight, LayoutDashboard,
   ShieldCheck, HelpCircle, FileCheck, Eye, MessageSquare
 } from 'lucide-react';
 import { supabase } from '../../utils/supabase';
+import PageHeader from '../../components/common/PageHeader';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -262,8 +263,11 @@ export const Dashboard = () => {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h1 style={{ fontSize: '35px', fontWeight: 700, letterSpacing: '-0.5px', color: 'var(--text-dark)' }}>Client Dashboard</h1>
-          <p style={{fontSize: '20px', color: 'var(--text-gray)', marginTop: '4px' }}>Welcome back! Monitor employee verifications and pending items.</p>
+          <PageHeader 
+            title="Client Dashboard" 
+            subtitle="Welcome back! Monitor employee verifications and pending items."
+            icon={LayoutDashboard}
+          />
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {/* <div className="card" style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#fff', fontSize: '14px', color: 'var(--text-gray)' }}>

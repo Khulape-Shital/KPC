@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Kanban, Table as TableIcon, Clock, AlertTriangle, Users, Edit2, Flag, X, FileText, History, Info, MessageSquare } from 'lucide-react';
+import { Search, Filter, Kanban, Table as TableIcon, Clock, AlertTriangle, Users, Edit2, Flag, X, FileText, History, Info, MessageSquare, Building, ShieldCheck, ChevronDown } from 'lucide-react';
 
 import { getSupabaseEmployees, getSupabaseClients, supabase } from '../utils/supabase';
 import { mockDb } from '../utils/mockDb';
+import PageHeader from '../components/common/PageHeader';
 
 const STATUSES = [
   "Submitted",
@@ -257,8 +258,11 @@ export const VerificationTracking = () => {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: '8px', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
         <div>
-          <h1 className="gradient-text" style={{ fontSize: '36px', fontWeight: 800, marginBottom: '8px', letterSpacing: '-0.5px' }}>Verification Tracking</h1>
-          <p style={{ fontSize: '16px', color: '#64748b', fontWeight: 500 }}>Command center for overseeing verification workflows, SLAs, and escalations.</p>
+          <PageHeader 
+            title="Verification Tracking" 
+            subtitle="Command center for overseeing verification workflows, SLAs, and escalations."
+            icon={ShieldCheck}
+          />
         </div>
       </div>
 
@@ -327,43 +331,59 @@ export const VerificationTracking = () => {
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', flex: 1 }}>
             <div style={{ flex: 1, minWidth: '280px', position: 'relative', display: 'flex', alignItems: 'center' }}>
               <Search size={20} style={{ position: 'absolute', left: '16px', color: '#94a3b8' }} />
-              <input type="text" placeholder="Search ID or Name" value={search} onChange={(e) => setSearch(e.target.value)} onFocus={e => e.currentTarget.parentElement.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)'} onBlur={e => e.currentTarget.parentElement.style.boxShadow = 'none'} style={{ width: '100%', padding: '14px 16px 14px 48px', borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: '15px', outline: 'none', transition: 'all 0.2s', backgroundColor: '#ffffff', color: '#0f172a' }} />
+              <input 
+                type="text" 
+                placeholder="Search ID or Name" 
+                value={search} 
+                onChange={(e) => setSearch(e.target.value)} 
+                onFocus={e => {e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.15)'; e.currentTarget.style.borderColor = '#3b82f6'}} 
+                onBlur={e => {e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e2e8f0'}} 
+                style={{ width: '100%', height: '52px', padding: '0 16px 0 48px', borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: '15px', outline: 'none', transition: 'all 0.2s', backgroundColor: '#f8fafc', color: '#0f172a', fontWeight: 500 }} 
+              />
             </div>
 
-            <div style={{ position: "relative", display: "flex", flexDirection: "column", backgroundColor: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "6px 16px", minWidth: "180px", transition: "all 0.2s" }} onFocusCapture={e => e.currentTarget.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)'} onBlurCapture={e => e.currentTarget.style.boxShadow = 'none'}>
-              <label style={{ fontSize: "11px", color: "#64748b", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Company</label>
+            <div style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", backgroundColor: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "0 16px", minWidth: "180px", height: "52px", transition: "all 0.2s", cursor: "pointer" }} onFocusCapture={e => {e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.15)'; e.currentTarget.style.borderColor = '#3b82f6'}} onBlurCapture={e => {e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e2e8f0'}}>
+              <label style={{ fontSize: "10px", color: "#64748b", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px", pointerEvents: "none" }}>Company</label>
               <select value={filterCompany} onChange={(e) => setFilterCompany(e.target.value)} style={{ border: "none", background: "transparent", outline: "none", fontSize: "14px", fontWeight: 600, color: "#0f172a", padding: "0", width: "100%", appearance: "none", cursor: "pointer" }}>
                 <option value="All">All Companies</option>
                 {uniqueCompanies.map((c, i) => <option key={i} value={c}>{c}</option>)}
               </select>
-              <span style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: "#94a3b8", fontSize: "10px" }}>▼</span>
+              <div style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", display: "flex", color: "#94a3b8" }}>
+                <ChevronDown size={16} />
+              </div>
             </div>
 
-            <div style={{ position: "relative", display: "flex", flexDirection: "column", backgroundColor: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "6px 16px", minWidth: "180px", transition: "all 0.2s" }} onFocusCapture={e => e.currentTarget.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)'} onBlurCapture={e => e.currentTarget.style.boxShadow = 'none'}>
-              <label style={{ fontSize: "11px", color: "#64748b", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Client Account</label>
+            <div style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", backgroundColor: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "0 16px", minWidth: "180px", height: "52px", transition: "all 0.2s", cursor: "pointer" }} onFocusCapture={e => {e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.15)'; e.currentTarget.style.borderColor = '#3b82f6'}} onBlurCapture={e => {e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e2e8f0'}}>
+              <label style={{ fontSize: "10px", color: "#64748b", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px", pointerEvents: "none" }}>Client Account</label>
               <select value={filterClient} onChange={(e) => setFilterClient(e.target.value)} style={{ border: "none", background: "transparent", outline: "none", fontSize: "14px", fontWeight: 600, color: "#0f172a", padding: "0", width: "100%", appearance: "none", cursor: "pointer" }}>
                 <option value="All">All Client Accounts</option>
                 {uniqueClients.map((c, i) => <option key={i} value={c}>{c}</option>)}
               </select>
-              <span style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: "#94a3b8", fontSize: "10px" }}>▼</span>
+              <div style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", display: "flex", color: "#94a3b8" }}>
+                <ChevronDown size={16} />
+              </div>
             </div>
 
-            <div style={{ position: "relative", display: "flex", flexDirection: "column", backgroundColor: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "6px 16px", minWidth: "180px", transition: "all 0.2s" }} onFocusCapture={e => e.currentTarget.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)'} onBlurCapture={e => e.currentTarget.style.boxShadow = 'none'}>
-              <label style={{ fontSize: "11px", color: "#64748b", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>Service</label>
+            <div style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", backgroundColor: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "0 16px", minWidth: "180px", height: "52px", transition: "all 0.2s", cursor: "pointer" }} onFocusCapture={e => {e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.15)'; e.currentTarget.style.borderColor = '#3b82f6'}} onBlurCapture={e => {e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e2e8f0'}}>
+              <label style={{ fontSize: "10px", color: "#64748b", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px", pointerEvents: "none" }}>Service</label>
               <select value={filterService} onChange={(e) => setFilterService(e.target.value)} style={{ border: "none", background: "transparent", outline: "none", fontSize: "14px", fontWeight: 600, color: "#0f172a", padding: "0", width: "100%", appearance: "none", cursor: "pointer" }}>
                 <option value="All">All Services</option>
                 {uniqueServices.map((s, i) => <option key={i} value={s}>{s}</option>)}
               </select>
-              <span style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: "#94a3b8", fontSize: "10px" }}>▼</span>
+              <div style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", display: "flex", color: "#94a3b8" }}>
+                <ChevronDown size={16} />
+              </div>
             </div>
 
-            <div style={{ position: "relative", display: "flex", flexDirection: "column", backgroundColor: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "6px 16px", minWidth: "180px", transition: "all 0.2s" }} onFocusCapture={e => e.currentTarget.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)'} onBlurCapture={e => e.currentTarget.style.boxShadow = 'none'}>
-              <label style={{ fontSize: "11px", color: "#64748b", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px" }}>SLA Status</label>
+            <div style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", backgroundColor: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "0 16px", minWidth: "180px", height: "52px", transition: "all 0.2s", cursor: "pointer" }} onFocusCapture={e => {e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.15)'; e.currentTarget.style.borderColor = '#3b82f6'}} onBlurCapture={e => {e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e2e8f0'}}>
+              <label style={{ fontSize: "10px", color: "#64748b", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "2px", pointerEvents: "none" }}>SLA Status</label>
               <select value={filterSla} onChange={(e) => setFilterSla(e.target.value)} style={{ border: "none", background: "transparent", outline: "none", fontSize: "14px", fontWeight: 600, color: "#0f172a", padding: "0", width: "100%", appearance: "none", cursor: "pointer" }}>
                 <option value="All">All SLAs</option>
                 {uniqueSlas.map((s, i) => <option key={i} value={s}>{s}</option>)}
               </select>
-              <span style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: "#94a3b8", fontSize: "10px" }}>▼</span>
+              <div style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", display: "flex", color: "#94a3b8" }}>
+                <ChevronDown size={16} />
+              </div>
             </div>
           </div>
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Users, PhoneCall, Clock, CheckCircle, Search, AlertCircle, PhoneMissed, PhoneForwarded, Plus, X, Trash2, Briefcase, ChevronRight } from 'lucide-react';
+import { Users, PhoneCall, Clock, CheckCircle, Search, AlertCircle, PhoneMissed, PhoneForwarded, Plus, X, Trash2, Briefcase, ChevronRight, Activity, Inbox } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 // import { mockDb } from '../utils/mockDb';
 import { supabase, getSupabaseEmployees } from '../utils/supabase';
 import { getExecutiveStats } from '../utils/executiveStats';
+import PageHeader from '../components/common/PageHeader';
 
 export const ExecutiveMonitoring = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export const ExecutiveMonitoring = () => {
   const [designation, setDesignation] = useState('Executive');
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All Statuses');
+  const [pendingCases, setPendingCases] = useState(0);
   const [callMetrics, setCallMetrics] = useState({ total: 0, connected: 0, missed: 0, otpSuccess: '0%' });
 
   useEffect(() => {
@@ -63,6 +65,11 @@ export const ExecutiveMonitoring = () => {
     });
 
     setExecutives(updatedExecs);
+
+    const unassignedCount = employees.filter(emp => 
+      !["completed", "approved", "rejected"].includes((emp.status || "").toLowerCase()) && !emp.assigned_to
+    ).length;
+    setPendingCases(unassignedCount);
 
     // Compute Global Call Metrics dynamically
     let totalCalls = 0;
@@ -178,71 +185,54 @@ export const ExecutiveMonitoring = () => {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h1 className="gradient-text" style={{ fontSize: '36px', marginBottom: '8px', letterSpacing: '-0.5px' }}>Executive Monitoring</h1>
-          <p style={{ fontSize: '16px', color: 'var(--text-gray)', maxWidth: '600px', lineHeight: '1.5' }}>
-            Monitor workforce performance, distribute workload, and track SLA compliance in real-time.
-          </p>
+          <PageHeader 
+            title="Executive Monitoring" 
+            subtitle="Monitor workforce performance, distribute workload, and track SLA compliance in real-time."
+            icon={Activity}
+          />
         </div>
         <button className="btn btn-primary" onClick={() => setShowCreateModal(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 24px', fontSize: '15px', borderRadius: '12px', boxShadow: '0 10px 15px -3px rgba(37, 99, 235, 0.2)' }}>
           <Plus size={18} /> Create Executive
         </button>
       </div>
 
-      {/* Global Call Performance Dashboard */}
-      <div className="card" style={{ padding: '32px', backgroundColor: '#fff', borderTop: '4px solid var(--primary-blue)', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '-100px', right: '-100px', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(37,99,235,0.08) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%' }}></div>
-        <h2 style={{ fontSize: '18px', marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-dark)' }}>
-          <div style={{ padding: '10px', backgroundColor: 'var(--primary-blue-light)', borderRadius: '10px', color: 'var(--primary-blue)' }}>
-            <PhoneCall size={20} />
-          </div>
-          Global Call Performance
-        </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <span style={{ fontSize: '13px', color: 'var(--text-gray)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px', letterSpacing: '0.5px' }}>TOTAL CALLS</span>
-            <div style={{ fontSize: '36px', fontWeight: 700, color: 'var(--text-dark)', letterSpacing: '-1px' }}>{callMetrics.total}</div>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <span style={{ fontSize: '13px', color: 'var(--text-gray)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px', letterSpacing: '0.5px' }}><PhoneForwarded size={16} color="#166534" /> CONNECTED</span>
-            <div style={{ fontSize: '36px', fontWeight: 700, color: '#166534', letterSpacing: '-1px' }}>{callMetrics.connected}</div>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <span style={{ fontSize: '13px', color: 'var(--text-gray)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px', letterSpacing: '0.5px' }}><PhoneMissed size={16} color="#dc2626" /> MISSED</span>
-            <div style={{ fontSize: '36px', fontWeight: 700, color: '#dc2626', letterSpacing: '-1px' }}>{callMetrics.missed}</div>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <span style={{ fontSize: '13px', color: 'var(--text-gray)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px', letterSpacing: '0.5px' }}><CheckCircle size={16} color="#0284c7" /> OTP SUCCESS</span>
-            <div style={{ fontSize: '36px', fontWeight: 700, color: '#0284c7', letterSpacing: '-1px' }}>{callMetrics.otpSuccess}</div>
-          </div>
-        </div>
-      </div>
+
 
       {/* Aggregate Metrics */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
-        <div className="card" style={{ padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #e2e8f0', background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+        <div className="card hover-lift" style={{ padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #e2e8f0', background: '#fff', borderRadius: '20px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
+          <div>
+            <div style={{ fontSize: '13px', color: 'var(--text-gray)', fontWeight: 600, marginBottom: '8px', letterSpacing: '0.5px' }}>PENDING CASES</div>
+            <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-dark)', letterSpacing: '-1px', lineHeight: 1 }}>{pendingCases}</div>
+          </div>
+          <div style={{ width: '56px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f3e8ff', borderRadius: '16px', color: '#9333ea' }}>
+            <Inbox size={28} />
+          </div>
+        </div>
+        <div className="card hover-lift" style={{ padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #e2e8f0', background: '#fff', borderRadius: '20px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
           <div>
             <div style={{ fontSize: '13px', color: 'var(--text-gray)', fontWeight: 600, marginBottom: '8px', letterSpacing: '0.5px' }}>ACTIVE CASES</div>
-            <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-dark)', letterSpacing: '-1px' }}>{totalActive}</div>
+            <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-dark)', letterSpacing: '-1px', lineHeight: 1 }}>{totalActive}</div>
           </div>
-          <div style={{ padding: '16px', backgroundColor: '#eff6ff', borderRadius: '16px', color: 'var(--primary-blue)', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)' }}>
+          <div style={{ width: '56px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#eff6ff', borderRadius: '16px', color: 'var(--primary-blue)' }}>
             <Briefcase size={28} />
           </div>
         </div>
-        <div className="card" style={{ padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #e2e8f0', background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)' }}>
+        <div className="card hover-lift" style={{ padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #e2e8f0', background: '#fff', borderRadius: '20px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
           <div>
             <div style={{ fontSize: '13px', color: 'var(--text-gray)', fontWeight: 600, marginBottom: '8px', letterSpacing: '0.5px' }}>COMPLETED TODAY</div>
-            <div style={{ fontSize: '32px', fontWeight: 700, color: '#166534', letterSpacing: '-1px' }}>{totalCompleted}</div>
+            <div style={{ fontSize: '32px', fontWeight: 700, color: '#166534', letterSpacing: '-1px', lineHeight: 1 }}>{totalCompleted}</div>
           </div>
-          <div style={{ padding: '16px', backgroundColor: '#dcfce7', borderRadius: '16px', color: '#166534', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)' }}>
+          <div style={{ width: '56px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#dcfce7', borderRadius: '16px', color: '#166534' }}>
             <CheckCircle size={28} />
           </div>
         </div>
-        <div className="card" style={{ padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #e2e8f0', background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)' }}>
+        <div className="card hover-lift" style={{ padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #e2e8f0', background: '#fff', borderRadius: '20px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
           <div>
             <div style={{ fontSize: '13px', color: 'var(--text-gray)', fontWeight: 600, marginBottom: '8px', letterSpacing: '0.5px' }}>SLA COMPLIANCE</div>
-            <div style={{ fontSize: '32px', fontWeight: 700, color: avgSla >= 90 ? '#166534' : '#ea580c', letterSpacing: '-1px' }}>{avgSla}%</div>
+            <div style={{ fontSize: '32px', fontWeight: 700, color: avgSla >= 90 ? '#166534' : '#ea580c', letterSpacing: '-1px', lineHeight: 1 }}>{avgSla}%</div>
           </div>
-          <div style={{ padding: '16px', backgroundColor: avgSla >= 90 ? '#dcfce7' : '#ffedd5', borderRadius: '16px', color: avgSla >= 90 ? '#166534' : '#ea580c', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)' }}>
+          <div style={{ width: '56px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: avgSla >= 90 ? '#dcfce7' : '#ffedd5', borderRadius: '16px', color: avgSla >= 90 ? '#166534' : '#ea580c' }}>
             <Clock size={28} />
           </div>
         </div>

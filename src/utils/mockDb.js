@@ -240,6 +240,180 @@ const INITIAL_CLIENTS = [
     timeline: [
       { event: 'Client Onboarded', user: 'Operations Manager', date: '2025-12-01T10:00:00.000Z' }
     ]
+  },
+  {
+    id: 'C-011',
+    name: 'CyberDyne Systems',
+    hq: 'Bangalore',
+    industry: 'Technology',
+    gstNumber: '11AABCX9999Y9Z9',
+    contactPerson: 'Miles Dyson',
+    contactEmail: 'miles@cyberdyne.in',
+    contactPhone: '9876577777',
+    billingContact: 'John Connor',
+    billingEmail: 'finance@cyberdyne.in',
+    billingPhone: '9876577778',
+    services: ['Identity Verification', 'Background Verification'],
+    rateCard: { 'Identity Verification': 300, 'Background Verification': 1500 },
+    status: 'Active',
+    createdDate: '2026-07-01T10:00:00.000Z',
+    hrAccounts: [
+      { id: 'HR-013', name: 'Sarah Connor', email: 'sarah@cyberdyne.in', role: 'Primary HR', status: 'Active', lastLogin: '2026-07-02T10:45:00.000Z' }
+    ],
+    timeline: [
+      { event: 'Client Onboarded', user: 'Operations Manager', date: '2026-07-01T10:00:00.000Z' }
+    ]
+  }
+];
+
+const INITIAL_EMPLOYEES = [
+  {
+    id: "EMP-1001",
+    name: "Aarav Sharma",
+    company: "TechCorp Solutions",
+    status: "Submitted",
+    priority: "Medium",
+    services: ["Identity Verification"],
+    createdDate: new Date(Date.now() - 5 * 60000).toISOString(),
+    timeline: [
+      { event: "Submitted", user: "HR", date: new Date(Date.now() - 5 * 60000).toISOString() }
+    ]
+  },
+  {
+    id: "EMP-1002",
+    name: "Isha Patel",
+    company: "Vertex Group",
+    status: "Submitted",
+    priority: "Urgent",
+    services: ["Background Verification"],
+    createdDate: new Date(Date.now() - 25 * 60000).toISOString(),
+    timeline: [
+      { event: "Submitted", user: "HR", date: new Date(Date.now() - 25 * 60000).toISOString() }
+    ]
+  },
+  {
+    id: "EMP-1003",
+    name: "Rohan Gupta",
+    company: "Innovate Global",
+    status: "Submitted",
+    priority: "Medium",
+    services: ["Police Verification"],
+    createdDate: new Date(Date.now() - 35 * 60000).toISOString(),
+    timeline: [
+      { event: "Submitted", user: "HR", date: new Date(Date.now() - 35 * 60000).toISOString() }
+    ]
+  },
+  {
+    id: "EMP-1004",
+    name: "Meera Singh",
+    company: "FinServe Banking",
+    status: "Assigned",
+    assigned_to: "EX-01",
+    assigned_name: "Amitabh S.",
+    priority: "High",
+    services: ["Identity Verification", "Address Verification"],
+    createdDate: new Date(Date.now() - 2 * 3600000).toISOString(),
+    timeline: [
+      { event: "Submitted", user: "HR", date: new Date(Date.now() - 2 * 3600000).toISOString() },
+      { event: "Assigned", user: "Operations Manager", date: new Date(Date.now() - 1.5 * 3600000).toISOString() }
+    ]
+  },
+  {
+    id: "EMP-1005",
+    name: "Vikram Malhotra",
+    company: "Global Services Ltd",
+    status: "In-Progress",
+    assigned_to: "EX-02",
+    assigned_name: "Sanjay V.",
+    priority: "Medium",
+    services: ["Address Verification"],
+    createdDate: new Date(Date.now() - 24 * 3600000).toISOString(),
+    timeline: [
+      { event: "Submitted", user: "HR", date: new Date(Date.now() - 24 * 3600000).toISOString() },
+      { event: "Assigned", user: "Operations Manager", date: new Date(Date.now() - 23 * 3600000).toISOString() },
+      { event: "In-Progress", user: "Sanjay V.", date: new Date(Date.now() - 20 * 3600000).toISOString() }
+    ]
+  },
+  {
+    id: "EMP-1006",
+    name: "Neha Desai",
+    company: "Nexus Corp",
+    status: "otp-shared",
+    assigned_to: "EX-03",
+    assigned_name: "Neha Gupta",
+    priority: "Medium",
+    services: ["Background Verification"],
+    createdDate: new Date(Date.now() - 48 * 3600000).toISOString(),
+    timeline: [
+      { event: "Submitted", user: "HR", date: new Date(Date.now() - 48 * 3600000).toISOString() },
+      { event: "Assigned", user: "Operations Manager", date: new Date(Date.now() - 47 * 3600000).toISOString() },
+      { event: "otp-shared", user: "Neha Gupta", date: new Date(Date.now() - 24 * 3600000).toISOString() }
+    ]
+  },
+  {
+    id: "EMP-1007",
+    name: "Arjun Reddy",
+    company: "Alpha Logistics",
+    status: "report-submission",
+    assigned_to: "EX-04",
+    assigned_name: "Ravi Kumar",
+    priority: "Urgent",
+    services: ["Police Verification", "Address Verification"],
+    createdDate: new Date(Date.now() - 72 * 3600000).toISOString(),
+    timeline: [
+      { event: "Submitted", user: "HR", date: new Date(Date.now() - 72 * 3600000).toISOString() },
+      { event: "Assigned", user: "Operations Manager", date: new Date(Date.now() - 71 * 3600000).toISOString() },
+      { event: "Escalated", user: "Client", date: new Date(Date.now() - 48 * 3600000).toISOString(), details: "Client urgently requesting update" },
+      { event: "report-submission", user: "Ravi Kumar", date: new Date(Date.now() - 2 * 3600000).toISOString() }
+    ]
+  },
+  {
+    id: "EMP-1008",
+    name: "Pooja Sharma",
+    company: "Pinnacle Edu",
+    status: "Rejected",
+    assigned_to: "EX-01",
+    assigned_name: "Amitabh S.",
+    priority: "Medium",
+    services: ["Identity Verification"],
+    createdDate: new Date(Date.now() - 96 * 3600000).toISOString(),
+    timeline: [
+      { event: "Submitted", user: "HR", date: new Date(Date.now() - 96 * 3600000).toISOString() },
+      { event: "Assigned", user: "Operations Manager", date: new Date(Date.now() - 95 * 3600000).toISOString() },
+      { event: "Rejected", user: "Amitabh S.", date: new Date(Date.now() - 72 * 3600000).toISOString() }
+    ]
+  },
+  {
+    id: "EMP-1009",
+    name: "Karan Singh",
+    company: "Quantum Tech",
+    status: "Completed",
+    assigned_to: "EX-02",
+    assigned_name: "Sanjay V.",
+    priority: "Medium",
+    services: ["Address Verification", "Identity Verification"],
+    createdDate: new Date(Date.now() - 120 * 3600000).toISOString(),
+    timeline: [
+      { event: "Submitted", user: "HR", date: new Date(Date.now() - 120 * 3600000).toISOString() },
+      { event: "Assigned", user: "Operations Manager", date: new Date(Date.now() - 119 * 3600000).toISOString() },
+      { event: "Completed", user: "Sanjay V.", date: new Date(Date.now() - 48 * 3600000).toISOString() }
+    ]
+  },
+  {
+    id: "EMP-1010",
+    name: "Sneha Nair",
+    company: "Zeith Pharma",
+    status: "Completed",
+    assigned_to: "EX-03",
+    assigned_name: "Neha Gupta",
+    priority: "High",
+    services: ["Background Verification"],
+    createdDate: new Date(Date.now() - 144 * 3600000).toISOString(),
+    timeline: [
+      { event: "Submitted", user: "HR", date: new Date(Date.now() - 144 * 3600000).toISOString() },
+      { event: "Assigned", user: "Operations Manager", date: new Date(Date.now() - 143 * 3600000).toISOString() },
+      { event: "Completed", user: "Neha Gupta", date: new Date(Date.now() - 96 * 3600000).toISOString() }
+    ]
   }
 ];
 
@@ -248,7 +422,7 @@ export const mockDb = {
     if (!localStorage.getItem('kpc_users')) {
       localStorage.setItem('kpc_users', JSON.stringify(INITIAL_USERS));
     }
-    if (!localStorage.getItem('kpc_employees')) localStorage.setItem('kpc_employees', JSON.stringify([]));
+    if (!localStorage.getItem('kpc_employees') || localStorage.getItem('kpc_employees') === '[]') localStorage.setItem('kpc_employees', JSON.stringify(INITIAL_EMPLOYEES));
     if (!localStorage.getItem('kpc_notifications')) localStorage.setItem('kpc_notifications', JSON.stringify([]));
     if (!localStorage.getItem('kpc_invoices')) localStorage.setItem('kpc_invoices', JSON.stringify([]));
     if (!localStorage.getItem('kpc_payments')) localStorage.setItem('kpc_payments', JSON.stringify([]));

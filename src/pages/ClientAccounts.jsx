@@ -3,6 +3,7 @@ import { Plus, Search, Building, Users, FileText, RefreshCw, Loader } from 'luci
 import { useNavigate } from 'react-router-dom';
 import { mockDb } from '../utils/mockDb';
 import { supabase } from '../utils/supabase';
+import PageHeader from '../components/common/PageHeader';
 
 export const ClientAccounts = () => {
   const navigate = useNavigate();
@@ -90,14 +91,17 @@ export const ClientAccounts = () => {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
-          <h1 style={{ fontSize: '35px', fontWeight: 700, marginBottom: '8px' }}>Client Accounts</h1>
-          <p style={{ fontSize: '20px', color: 'var(--text-gray)' }}>Manage client companies, HR credentials, and verification services.</p>
+          <PageHeader 
+            title="Client Accounts" 
+            subtitle="Manage client companies, HR credentials, and verification services."
+            icon={Users}
+          />
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
           {/* <button className="btn btn-outline" onClick={() => loadClients()} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <RefreshCw size={15} /> Refresh
           </button> */}
-          <button className="btn btn-primary" onClick={() => navigate('/ops/clients/create')} style={{ display: 'flex', alignItems: 'center', gap: '8px', height: '50px', fontSize: '25px' }}>
+          <button className="btn btn-primary" onClick={() => navigate('/ops/clients/create')} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', padding: '8px 16px' }}>
             <Plus size={16} />Create Client
           </button>
         </div>
@@ -184,13 +188,13 @@ export const ClientAccounts = () => {
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
               <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid var(--border-color)' }}>
-                <th style={{ padding: '14px 16px', fontSize: '18px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CLIENT</th>
-                <th style={{ padding: '14px 16px', fontSize: '18px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>INDUSTRY & HQ</th>
-                <th style={{ padding: '14px 16px', font0Size: '18px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>SERVICES</th>
-                <th style={{ padding: '14px 16px', fontSize: '18px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>HR ACCOUNTS</th>
+                <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CLIENT</th>
+                <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>INDUSTRY & HQ</th>
+                <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>SERVICES</th>
+                <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>HR ACCOUNTS</th>
                 {/* <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>EMPLOYEES</th> */}
-                <th style={{ padding: '14px 16px', fontSize: '18px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>STATUS</th>
-                <th style={{ padding: '14px 16px', fontSize: '18px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', textAlign: 'right' }}>ACTIONS</th>
+                <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>STATUS</th>
+                <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', textAlign: 'right' }}>ACTIONS</th>
               </tr>
             </thead>
             <tbody>
@@ -209,34 +213,34 @@ export const ClientAccounts = () => {
                           <Building size={18} />
                         </div>
                         <div>
-                          <div style={{ fontWeight: 300, fontSize: '15px', color: 'var(--text-dark)' }}>{client.name}</div>
-                          <div style={{ fontSize: '18px', color: 'var(--text-gray)', marginTop: '2px' }}>ID: {client.id}</div>
+                          <div style={{ fontWeight: 500, fontSize: '14px', color: 'var(--text-dark)' }}>{client.name}</div>
+                          <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '2px' }}>ID: {client.id}</div>
                         </div>
                       </div>
                     </td>
-                    <td style={{ padding: '16px', fontSize: '15px' }}>
+                    <td style={{ padding: '16px', fontSize: '14px' }}>
                       <div style={{ fontWeight: 500, color: 'var(--text-dark)' }}>{client.industry}</div>
-                      <div style={{ fontSize: '18px', color: 'var(--text-gray)', marginTop: '2px' }}>{client.hq}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '2px' }}>{client.hq}</div>
                     </td>
                     <td style={{ padding: '16px' }}>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                         {(client.services || []).slice(0, 2).map(s => (
-                          <span key={s} style={{ fontSize: '15px', fontWeight: 600, padding: '2px 8px', borderRadius: '10px', backgroundColor: 'var(--primary-blue-light)', color: 'var(--primary-blue)' }}>
+                          <span key={s} style={{ fontSize: '11px', fontWeight: 600, padding: '2px 8px', borderRadius: '10px', backgroundColor: 'var(--primary-blue-light)', color: 'var(--primary-blue)' }}>
                             {s.replace(' Verification', '')}
                           </span>
                         ))}
                         {(client.services || []).length > 2 && (
-                          <span style={{ fontSize: '20px', fontWeight: 600, padding: '2px 8px', borderRadius: '10px', backgroundColor: '#f1f5f9', color: 'var(--text-gray)' }}>
+                          <span style={{ fontSize: '11px', fontWeight: 600, padding: '2px 8px', borderRadius: '10px', backgroundColor: '#f1f5f9', color: 'var(--text-gray)' }}>
                             +{client.services.length - 2}
                           </span>
                         )}
                       </div>
                     </td>
-                    <td style={{ padding: '16px', fontSize: '24px' }}>
+                    <td style={{ padding: '16px', fontSize: '14px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <Users size={24} color="var(--text-gray)" />
+                        <Users size={16} color="var(--text-gray)" />
                         <span style={{ fontWeight: 500 }}>{(client.hrAccounts.length)}</span>
-                        <span style={{ color: 'var(--text-gray)', fontSize: '18px' }}>users</span>
+                        <span style={{ color: 'var(--text-gray)', fontSize: '12px' }}>users</span>
                       </div>
                     </td>
                     {/* <td style={{ padding: '16px', fontSize: '14px' }}>
@@ -255,7 +259,7 @@ export const ClientAccounts = () => {
                       <button
                         className="btn btn-outline"
                         onClick={() => navigate(`/ops/clients/${client.id}`)}
-                        style={{ padding: '10px 20px', fontSize: '15px' }}
+                        style={{ padding: '6px 12px', fontSize: '13px' }}
                       >
                         View Details
                       </button>

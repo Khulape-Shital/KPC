@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { mockDb } from '../../utils/mockDb';
 import { getSupabaseEmployees, getSupabaseEmployeeById, updateSupabaseEmployee } from '../../utils/supabase';
-
+import PageHeader from '../../components/common/PageHeader';
 export const Dashboard = () => {
   const navigate = useNavigate();
   const [assignedTasks, setAssignedTasks] = useState([]);
@@ -229,8 +229,11 @@ export const Dashboard = () => {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h1 style={{ fontSize: '35px', fontWeight: 700, letterSpacing: '-0.5px', color: 'var(--text-dark)' }}>Executive Workspace</h1>
-          <p style={{ fontSize: '20px', color: 'var(--text-gray)', marginTop: '4px' }}>Manage your daily verifications, calls, and pending tasks.</p>
+          <PageHeader 
+            title="Executive Workspace" 
+            subtitle="Manage your daily verifications, calls, and pending tasks."
+            icon={Briefcase}
+          />
         </div>
       </div>
 
