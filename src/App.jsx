@@ -245,14 +245,14 @@ const Login = () => {
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff', fontFamily: '"Inter", sans-serif' }}>
       {/* Left Side */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 8%', maxWidth: '600px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', backgroundColor: '#f0f4ff', borderRadius: '10px', color: '#4f46e5' }}>
             <Building size={22} strokeWidth={2.5} />
           </div>
           <span style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a' }}>KPC</span>
         </div>
 
-        <h1 style={{ fontSize: '42px', fontWeight: 800, color: '#0f172a', marginBottom: '16px', letterSpacing: '-0.5px' }}>
+        <h1 style={{ marginTop: 0, fontSize: '42px', fontWeight: 800, color: '#0f172a', marginBottom: '16px', letterSpacing: '-0.5px' }}>
           Welcome back.
         </h1>
         <p style={{ fontSize: '16px', color: '#64748b', marginBottom: '48px', lineHeight: 1.5, maxWidth: '400px' }}>
