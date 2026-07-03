@@ -4,6 +4,8 @@ import * as XLSX from "xlsx";
 import { Download, Layers, Search, Calendar, Eye, CheckCircle2, XCircle, FileText, ChevronDown, X, Clock, User, CheckSquare, AlertCircle, History, Trash2 } from 'lucide-react';
 import PageHeader from '../components/common/PageHeader';
 const DOC_TYPES = [
+  { id: 'Profile Photo', label: 'PP', tooltip: 'Profile Photo' },
+  { id: 'Signature', label: 'Sg', tooltip: 'Signature' },
   { id: 'Aadhaar Card', label: 'A', tooltip: 'Aadhaar Card' },
   { id: 'PAN Card', label: 'P', tooltip: 'PAN Card' },
   { id: 'Voter ID', label: 'V', tooltip: 'Voter ID' },
@@ -136,10 +138,9 @@ export const EmployeeForms = () => {
             const rawStatus = localStatus || emp.verification_status;
             const mappedStatus = statusMap[rawStatus] || 'submitted';
 
-            // Extract assigned executive from timeline
-            const assignEvent = timeline.find(t => t.event === 'Executive Assigned');
-            const assignedExec = assignEvent ? assignEvent.details : null;
-
+            // Extract assigned executive from database
+            const assignedExec = emp.assigned_name;
+            
             // Extract latest call outcome from timeline
             const callEvents = timeline.filter(t => t.event?.startsWith('Call '));
             const lastCall = callEvents.length > 0 ? callEvents[callEvents.length - 1] : null;

@@ -22,6 +22,8 @@ import PageHeader from '../../components/common/PageHeader';
 // ];
 
 const ALL_DOCUMENTS = [
+  { id: 'Profile Photo', description: 'Employee Profile Picture' },
+  { id: 'Signature', description: 'Employee Signature' },
   { id: 'Aadhaar Card', description: 'National Identity Card' },
   { id: 'PAN Card', description: 'Income Tax Identity Card' },
   { id: 'Light Bill/Rent Agreement', description: 'Physical Utility Bill or Rental Lease' },
