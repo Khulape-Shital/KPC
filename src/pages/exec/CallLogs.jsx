@@ -92,11 +92,35 @@ export const CallLogs = () => {
   }, [callLogs, searchTerm, outcomeFilter, otpFilter]);
 
   // Metrics
-  const today = new Date().toISOString().split('T')[0];
+  const todayObj = new Date();
+  const today = todayObj.toISOString().split('T')[0];
+  const tomorrowObj = new Date(todayObj);
+  tomorrowObj.setDate(tomorrowObj.getDate() + 1);
+  const tomorrow = tomorrowObj.toISOString().split('T')[0];
+
   const callsToday = callLogs.filter(l => l.date.startsWith(today)).length;
   const connectedCalls = callLogs.filter(l => l.outcome === 'Connected' || l.outcome === 'Verified').length;
   const missedCalls = callLogs.filter(l => l.outcome === 'Attempted').length;
   const otpVerifiedCalls = callLogs.filter(l => l.otpStatus === 'Verified').length;
+
+  // Calculate dynamic follow-ups
+  const followUpsToday = callLogs.filter(l => {
+    if (l.followUpDate) return l.followUpDate.startsWith(today);
+    return l.outcome === 'Attempted' && l.date.startsWith(today); // Fallback if no follow_up_date column
+  }).length;
+
+  const followUpsTomorrow = callLogs.filter(l => {
+    if (l.followUpDate) return l.followUpDate.startsWith(tomorrow);
+    return false;
+  }).length;
+
+  const followUpsOverdue = callLogs.filter(l => {
+    const logDate = l.followUpDate ? l.followUpDate.split('T')[0] : l.date.split('T')[0];
+    if (l.followUpDate) return logDate < today;
+    return l.outcome === 'Attempted' && logDate < today; // Fallback
+  }).length;
+
+  const totalFollowUps = followUpsToday + followUpsTomorrow + followUpsOverdue;
 
   const getOutcomeBadge = (outcome) => {
     switch (outcome) {
@@ -152,7 +176,7 @@ export const CallLogs = () => {
         </div>
         <div className="card metric-card" style={{ padding: '16px', backgroundColor: '#fff', borderLeft: '4px solid #f59e0b' }}>
           <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase' }}>Follow-Ups Pending</div>
-          <div style={{ fontSize: '24px', fontWeight: 700, color: '#d97706', marginTop: '8px' }}>0</div>
+          <div style={{ fontSize: '24px', fontWeight: 700, color: '#d97706', marginTop: '8px' }}>{totalFollowUps}</div>
         </div>
         {/* <div className="card metric-card" style={{ padding: '16px', backgroundColor: '#fff', borderLeft: '4px solid #06b6d4' }}>
           <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase' }}>Avg Call Duration</div>
@@ -286,10 +310,6 @@ export const CallLogs = () => {
                 ▼
               </span>
             </div>
-
-            {/* <button className="btn btn-outline" onClick={() => { setSearchTerm(''); setOutcomeFilter('All'); setOtpFilter('All'); }} style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Filter size={14} /> Reset
-            </button> */}
           </div>
 
           {/* CALL LOG TABLE */}
@@ -301,7 +321,6 @@ export const CallLogs = () => {
                     <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>EMPLOYEE</th>
                     <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>CONTACT</th>
                     <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>DATE & TIME</th>
-                    {/* <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>DURATION</th> */}
                     <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>OUTCOME</th>
                     <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>OTP STATUS</th>
                     <th style={{ padding: '14px 16px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)', textAlign: 'right' }}>ACTIONS</th>
@@ -310,7 +329,7 @@ export const CallLogs = () => {
                 <tbody>
                   {filteredLogs.length === 0 ? (
                     <tr>
-                      <td colSpan="7" style={{ padding: '64px 24px', textAlign: 'center' }}>
+                      <td colSpan="6" style={{ padding: '64px 24px', textAlign: 'center' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
                           <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <PhoneCall size={32} color="var(--text-light)" />
@@ -341,9 +360,6 @@ export const CallLogs = () => {
                             <div style={{ fontSize: '13px', color: 'var(--text-dark)' }}>{new Date(log.date).toLocaleDateString()}</div>
                             <div style={{ fontSize: '11px', color: 'var(--text-gray)' }}>{new Date(log.date).toLocaleTimeString([], { timeStyle: 'short' })}</div>
                           </td>
-                          {/* <td style={{ padding: '16px', fontSize: '13px', color: 'var(--text-dark)' }}>
-                            {log.duration}
-                          </td> */}
                           <td style={{ padding: '16px' }}>
                             <span style={{ fontSize: '11px', fontWeight: 600, color: outcomeBadge.color, backgroundColor: outcomeBadge.bg, padding: '4px 8px', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                               {outcomeBadge.icon} {log.outcome}
@@ -381,16 +397,18 @@ export const CallLogs = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', backgroundColor: '#f8fafc', borderRadius: '6px', border: '1px solid var(--border-color)' }}>
                 <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-dark)' }}>Today</span>
-                <span style={{ fontSize: '12px', fontWeight: 700, color: '#fff', backgroundColor: '#3b82f6', padding: '2px 8px', borderRadius: '12px' }}>0</span>
+                <span style={{ fontSize: '12px', fontWeight: 700, color: '#fff', backgroundColor: '#3b82f6', padding: '2px 8px', borderRadius: '12px' }}>{followUpsToday}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', backgroundColor: '#f8fafc', borderRadius: '6px', border: '1px solid var(--border-color)' }}>
                 <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-dark)' }}>Tomorrow</span>
-                <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', backgroundColor: '#e2e8f0', padding: '2px 8px', borderRadius: '12px' }}>0</span>
+                <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', backgroundColor: '#e2e8f0', padding: '2px 8px', borderRadius: '12px' }}>{followUpsTomorrow}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', backgroundColor: '#fef2f2', borderRadius: '6px', border: '1px solid #fca5a5' }}>
                 <span style={{ fontSize: '13px', fontWeight: 600, color: '#991b1b' }}>Overdue</span>
-                <span style={{ fontSize: '12px', fontWeight: 700, color: '#fff', backgroundColor: '#ef4444', padding: '2px 8px', borderRadius: '12px' }}>0</span>
+                <span style={{ fontSize: '12px', fontWeight: 700, color: '#fff', backgroundColor: '#ef4444', padding: '2px 8px', borderRadius: '12px' }}>{followUpsOverdue}</span>
               </div>
+            </div>
+          </div>
             </div>
           </div>
 
