@@ -409,8 +409,6 @@ export const CallLogs = () => {
               </div>
             </div>
           </div>
-            </div>
-          </div>
 
           {/* ANALYTICS SECTION */}
           {/* <div className="card" style={{ padding: '20px', backgroundColor: '#fff' }}>
