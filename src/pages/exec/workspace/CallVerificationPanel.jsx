@@ -108,7 +108,8 @@ export const CallVerificationPanel = ({ employee, onUpdate }) => {
         outcome_id: outcome.id,
         remarks: remarks,
         call_received: outcome.callReceived,
-        otp_received: outcome.otpReceived
+        otp_received: outcome.otpReceived,
+        call_status: outcome.callReceived && outcome.otpReceived ? 'Verified' : 'Attempted'
       });
 
     if (insertError) {
