@@ -49,6 +49,22 @@ export const ClientDetails = () => {
       .select('*')
       .eq('company_id', id);
 
+    const { data: employeesData } = await supabase
+      .from('employees')
+      .select('*')
+      .eq('company_id', id)
+      .order('created_at', { ascending: false });
+
+    if (employeesData) {
+      const formattedEmployees = employeesData.map(e => ({
+        ...e,
+        name: e.first_name ? `${e.first_name} ${e.last_name}` : e.name,
+        submittedDate: e.submitted_at || e.created_at,
+        status: e.verification_status || 'draft'
+      }));
+      setEmployees(formattedEmployees);
+    }
+
     const formattedClient = {
       id: company.id,
       name: company.company_name,
@@ -273,8 +289,8 @@ export const ClientDetails = () => {
             { label: 'REJECTED', val: stats.rejected, color: '#dc2626' },
           ].map((s, i) => (
             <div key={i} style={{ padding: '16px', backgroundColor: '#f8fafc', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-              <span style={{ fontSize: '11px', color: 'var(--text-gray)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{s.label}</span>
-              <div style={{ fontSize: '28px', fontWeight: 700, color: s.color, marginTop: '8px' }}>{s.val}</div>
+              <span style={{ fontSize: '12px', color: 'var(--text-gray)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{s.label}</span>
+              <div style={{ fontSize: '32px', fontWeight: 700, color: s.color, marginTop: '8px' }}>{s.val}</div>
             </div>
           ))}
         </div>
@@ -299,7 +315,7 @@ export const ClientDetails = () => {
                 ['Status', null],
               ].map(([label, val]) => (
                 <div key={label}>
-                  <span style={{ fontSize: '11px', color: 'var(--text-gray)', fontWeight: 600, textTransform: 'uppercase' }}>{label}</span>
+                  <span style={{ fontSize: '12px', color: 'var(--text-gray)', fontWeight: 600, textTransform: 'uppercase' }}>{label}</span>
                   {label === 'Status' ? (
                     <div style={{ marginTop: '4px' }}>
                       <span className={client.status === 'Active' ? 'badge badge-completed' : 'badge badge-rejected'}>{client.status}</span>
@@ -320,20 +336,20 @@ export const ClientDetails = () => {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <div style={{ fontSize: '11px', color: 'var(--text-gray)', fontWeight: 600, textTransform: 'uppercase', marginBottom: '6px' }}>Primary Contact</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-gray)', fontWeight: 600, textTransform: 'uppercase', marginBottom: '6px' }}>Primary Contact</div>
                 <div style={{ fontWeight: 600, fontSize: '14px' }}>{client.contactPerson}</div>
                 <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '3px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Mail size={12} /> {client.contactEmail}
+                  <Mail size={14} /> {client.contactEmail}
                 </div>
                 <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '3px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Phone size={12} /> {client.contactPhone}
+                  <Phone size={14} /> {client.contactPhone}
                 </div>
               </div>
               <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px' }}>
-                <div style={{ fontSize: '11px', color: 'var(--text-gray)', fontWeight: 600, textTransform: 'uppercase', marginBottom: '6px' }}>Billing Contact</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-gray)', fontWeight: 600, textTransform: 'uppercase', marginBottom: '6px' }}>Billing Contact</div>
                 <div style={{ fontWeight: 600, fontSize: '14px' }}>{client.billingContact || client.contactPerson}</div>
                 <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '3px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Mail size={12} /> {client.billingEmail || client.contactEmail}
+                  <Mail size={14} /> {client.billingEmail || client.contactEmail}
                 </div>
               </div>
             </div>
@@ -367,38 +383,38 @@ export const ClientDetails = () => {
               <h2 style={{ fontSize: '16px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Users size={18} color="var(--primary-blue)" /> HR Account Management
               </h2>
-              <button className="btn btn-outline" onClick={() => setShowAddHR(true)} style={{ fontSize: '12px', padding: '6px 12px' }}>
-                <Plus size={13} style={{ marginRight: '4px' }} /> Add Account
+              <button className="btn btn-outline" onClick={() => setShowAddHR(true)} style={{ fontSize: '13px', padding: '6px 14px' }}>
+                <Plus size={14} style={{ marginRight: '4px' }} /> Add Account
               </button>
             </div>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-gray)', fontSize: '11px', textTransform: 'uppercase' }}>
-                  <th style={{ paddingBottom: '10px', fontWeight: 600 }}>NAME & EMAIL</th>
-                  <th style={{ paddingBottom: '10px', fontWeight: 600 }}>ROLE</th>
-                  <th style={{ paddingBottom: '10px', fontWeight: 600 }}>LAST LOGIN</th>
-                  <th style={{ paddingBottom: '10px', fontWeight: 600 }}>STATUS</th>
-                  <th style={{ paddingBottom: '10px', fontWeight: 600, textAlign: 'right' }}>ACTION</th>
+                <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-gray)', fontSize: '12px', textTransform: 'uppercase' }}>
+                  <th style={{ paddingBottom: '12px', fontWeight: 600 }}>NAME & EMAIL</th>
+                  <th style={{ paddingBottom: '12px', fontWeight: 600 }}>ROLE</th>
+                  <th style={{ paddingBottom: '12px', fontWeight: 600 }}>LAST LOGIN</th>
+                  <th style={{ paddingBottom: '12px', fontWeight: 600 }}>STATUS</th>
+                  <th style={{ paddingBottom: '12px', fontWeight: 600, textAlign: 'right' }}>ACTION</th>
                 </tr>
               </thead>
               <tbody>
                 {(client.hrAccounts || []).map((hr) => (
                   <tr key={hr.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <td style={{ padding: '14px 0' }}>
-                      <div style={{ fontWeight: 600, fontSize: '18px' }}>{hr.name}</div>
-                      <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '2px' }}>{hr.email}</div>
+                    <td style={{ padding: '16px 0' }}>
+                      <div style={{ fontWeight: 600, fontSize: '14px' }}>{hr.name}</div>
+                      <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '2px' }}>{hr.email}</div>
                     </td>
-                    <td style={{ padding: '14px 0', fontSize: '18px', color: 'var(--text-dark)' }}>HR</td>
-                    <td style={{ padding: '14px 0', fontSize: '12px', color: 'var(--text-gray)' }}>{fmtDate(hr.lastLogin)}</td>
-                    <td style={{ padding: '14px 0' }}>
+                    <td style={{ padding: '16px 0', fontSize: '14px', color: 'var(--text-dark)' }}>HR</td>
+                    <td style={{ padding: '16px 0', fontSize: '13px', color: 'var(--text-gray)' }}>{fmtDate(hr.lastLogin)}</td>
+                    <td style={{ padding: '16px 0' }}>
                       <span className={hr.status === 'Active' ? 'badge badge-completed' : 'badge badge-rejected'}>
                         {hr.status}
                       </span>
                     </td>
-                    <td style={{ padding: '14px 0', textAlign: 'right' }}>
+                    <td style={{ padding: '16px 0', textAlign: 'right' }}>
                       <button
                         onClick={() => toggleHRStatus(hr.id)}
-                        style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: hr.status === 'Active' ? '#ef4444' : '#10b981', fontSize: '12px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px', marginLeft: 'auto' }}
+                        style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: hr.status === 'Active' ? '#ef4444' : '#10b981', fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px', marginLeft: 'auto' }}
                         title={hr.status === 'Active' ? 'Lock Account' : 'Unlock Account'}
                       >
                         <Power size={14} /> {hr.status === 'Active' ? 'Lock' : 'Unlock'}
@@ -408,7 +424,7 @@ export const ClientDetails = () => {
                 ))}
                 {(!client.hrAccounts || client.hrAccounts.length === 0) && (
                   <tr>
-                    <td colSpan={5} style={{ padding: '32px', textAlign: 'center', color: 'var(--text-gray)', fontSize: '13px' }}>
+                    <td colSpan={5} style={{ padding: '32px', textAlign: 'center', color: 'var(--text-gray)', fontSize: '14px' }}>
                       No HR accounts yet. <button onClick={() => setShowAddHR(true)} style={{ background: 'none', border: 'none', color: 'var(--primary-blue)', cursor: 'pointer', fontWeight: 600 }}>Create one →</button>
                     </td>
                   </tr>
@@ -437,27 +453,27 @@ export const ClientDetails = () => {
             )}
           </div>
 
-          {/* Recent Employees */}
+          {/* Recent Created Employees */}
           <div className="card" style={{ padding: '24px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
               <h2 style={{ fontSize: '16px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FileText size={18} color="var(--primary-blue)" /> Recent Employee Submissions
+                <Users size={18} color="var(--primary-blue)" /> Recent Created Employee
               </h2>
-              <button className="btn btn-outline" onClick={() => navigate('/ops/forms')} style={{ fontSize: '12px', padding: '6px 12px' }}>
+              <button className="btn btn-outline" onClick={() => navigate('/ops/forms')} style={{ fontSize: '13px', padding: '6px 14px' }}>
                 View All
               </button>
             </div>
             {employees.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '32px', color: 'var(--text-gray)', fontSize: '13px' }}>
-                No employee forms submitted by this client yet.
+              <div style={{ textAlign: 'center', padding: '32px', color: 'var(--text-gray)', fontSize: '14px' }}>
+                No employees created by this client yet.
               </div>
             ) : (
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-gray)', fontSize: '11px', textTransform: 'uppercase' }}>
-                    <th style={{ paddingBottom: '10px', fontWeight: 600 }}>EMPLOYEE</th>
-                    <th style={{ paddingBottom: '10px', fontWeight: 600 }}>SUBMITTED</th>
-                    <th style={{ paddingBottom: '10px', fontWeight: 600 }}>STATUS</th>
+                  <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-gray)', fontSize: '12px', textTransform: 'uppercase' }}>
+                    <th style={{ paddingBottom: '12px', fontWeight: 600 }}>EMPLOYEE</th>
+                    <th style={{ paddingBottom: '12px', fontWeight: 600 }}>CREATED</th>
+                    <th style={{ paddingBottom: '12px', fontWeight: 600 }}>STATUS</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -468,14 +484,64 @@ export const ClientDetails = () => {
                       style={{ borderBottom: '1px solid var(--border-color)', cursor: 'pointer' }}
                       onClick={() => navigate(`/ops/forms`)}
                     >
-                      <td style={{ padding: '12px 0' }}>
+                      <td style={{ padding: '16px 0' }}>
                         <div style={{ fontWeight: 600, fontSize: '14px' }}>{emp.name}</div>
-                        <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '2px' }}>{emp.id}</div>
+                        <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '2px' }}>{emp.id}</div>
                       </td>
-                      <td style={{ padding: '12px 0', fontSize: '12px', color: 'var(--text-gray)' }}>
+                      <td style={{ padding: '16px 0', fontSize: '13px', color: 'var(--text-gray)' }}>
+                        {emp.created_at ? new Date(emp.created_at).toLocaleDateString('en-IN') : '—'}
+                      </td>
+                      <td style={{ padding: '16px 0' }}>
+                        <span className={`badge badge-${emp.status === 'completed' ? 'completed' : emp.status === 'rejected' ? 'rejected' : emp.status === 'draft' ? 'draft' : 'submitted'}`}>
+                          {emp.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+
+          {/* Recent Employees */}
+          <div className="card" style={{ padding: '24px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <h2 style={{ fontSize: '16px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <FileText size={18} color="var(--primary-blue)" /> Recent Employee Submissions
+              </h2>
+              <button className="btn btn-outline" onClick={() => navigate('/ops/forms')} style={{ fontSize: '13px', padding: '6px 14px' }}>
+                View All
+              </button>
+            </div>
+            {employees.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '32px', color: 'var(--text-gray)', fontSize: '14px' }}>
+                No employee forms submitted by this client yet.
+              </div>
+            ) : (
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                <thead>
+                  <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-gray)', fontSize: '12px', textTransform: 'uppercase' }}>
+                    <th style={{ paddingBottom: '12px', fontWeight: 600 }}>EMPLOYEE</th>
+                    <th style={{ paddingBottom: '12px', fontWeight: 600 }}>SUBMITTED</th>
+                    <th style={{ paddingBottom: '12px', fontWeight: 600 }}>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {employees.slice(0, 5).map(emp => (
+                    <tr
+                      key={emp.id}
+                      className="table-row-hover"
+                      style={{ borderBottom: '1px solid var(--border-color)', cursor: 'pointer' }}
+                      onClick={() => navigate(`/ops/forms`)}
+                    >
+                      <td style={{ padding: '16px 0' }}>
+                        <div style={{ fontWeight: 600, fontSize: '14px' }}>{emp.name}</div>
+                        <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '2px' }}>{emp.id}</div>
+                      </td>
+                      <td style={{ padding: '16px 0', fontSize: '13px', color: 'var(--text-gray)' }}>
                         {emp.submittedDate ? new Date(emp.submittedDate).toLocaleDateString('en-IN') : '—'}
                       </td>
-                      <td style={{ padding: '12px 0' }}>
+                      <td style={{ padding: '16px 0' }}>
                         <span className={`badge badge-${emp.status === 'completed' ? 'completed' : emp.status === 'rejected' ? 'rejected' : emp.status === 'draft' ? 'draft' : 'submitted'}`}>
                           {emp.status}
                         </span>

@@ -238,161 +238,128 @@ export const Dashboard = () => {
       </div>
 
       {/* TOP METRIC CARDS */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '16px' }}>
-        <div className="card metric-card" style={{ padding: '20px', backgroundColor: '#fff', borderTop: '4px solid #0369a1' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-gray)' }}>
-            <span style={{ fontSize: '18px', fontWeight: 600 }}>Available Task</span>
-            <Briefcase size={18} />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+        
+        <div className="card" style={{ padding: '24px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '16px', background: 'linear-gradient(145deg, #ffffff, #f8fafc)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Available Tasks</div>
+              <div style={{ fontSize: '36px', fontWeight: 700, color: 'var(--text-dark)', lineHeight: '1', letterSpacing: '-1px' }}>{totalAvailable}</div>
+            </div>
+            <div style={{ padding: '12px', borderRadius: '12px', backgroundColor: '#e0f2fe', color: '#0284c7', boxShadow: '0 4px 12px rgba(2, 132, 199, 0.15)' }}>
+              <Briefcase size={22} strokeWidth={2.5} />
+            </div>
           </div>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px' }}>{totalAvailable}</div>
-          <div style={{ fontSize: '18px', color: 'var(--text-gray)', marginTop: '4px' }}>Total active queue</div>
+          <div style={{ fontSize: '13px', color: 'var(--text-gray)', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 500 }}>
+            <Activity size={14} color="#0284c7" /> Total active queue
+          </div>
         </div>
 
-        <div className="card metric-card" style={{ padding: '20px', backgroundColor: '#fff', borderTop: '4px solid #3b82f6' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-gray)' }}>
-            <span style={{ fontSize: '18px', fontWeight: 600 }}>In Progress</span>
-            <Activity size={18} />
+        <div className="card" style={{ padding: '24px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '16px', background: 'linear-gradient(145deg, #ffffff, #f8fafc)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>In Progress</div>
+              <div style={{ fontSize: '36px', fontWeight: 700, color: 'var(--text-dark)', lineHeight: '1', letterSpacing: '-1px' }}>{inProgress}</div>
+            </div>
+            <div style={{ padding: '12px', borderRadius: '12px', backgroundColor: '#dbeafe', color: '#2563eb', boxShadow: '0 4px 12px rgba(37, 99, 235, 0.15)' }}>
+              <Activity size={22} strokeWidth={2.5} />
+            </div>
           </div>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px' }}>{inProgress}</div>
-          <div style={{ fontSize: '18px', color: 'var(--text-gray)', marginTop: '4px' }}>Currently processing</div>
+          <div style={{ fontSize: '13px', color: 'var(--text-gray)', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 500 }}>
+            <Clock size={14} color="#2563eb" /> Currently processing
+          </div>
         </div>
 
-        <div className="card metric-card" style={{ padding: '20px', backgroundColor: '#fff', borderTop: '4px solid #8b5cf6' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-gray)' }}>
-            <span style={{ fontSize: '18px', fontWeight: 600 }}>Calls Pending</span>
-            <PhoneCall size={18} />
+        <div className="card" style={{ padding: '24px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '16px', background: 'linear-gradient(145deg, #ffffff, #f8fafc)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Calls Pending</div>
+              <div style={{ fontSize: '36px', fontWeight: 700, color: 'var(--text-dark)', lineHeight: '1', letterSpacing: '-1px' }}>{callsPending}</div>
+            </div>
+            <div style={{ padding: '12px', borderRadius: '12px', backgroundColor: '#f3e8ff', color: '#9333ea', boxShadow: '0 4px 12px rgba(147, 51, 234, 0.15)' }}>
+              <PhoneCall size={22} strokeWidth={2.5} />
+            </div>
           </div>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px' }}>{callsPending}</div>
-          <div style={{ fontSize: '18px', color: 'var(--text-gray)', marginTop: '4px' }}>Requires outreach</div>
+          <div style={{ fontSize: '13px', color: 'var(--text-gray)', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 500 }}>
+            <PhoneForwarded size={14} color="#9333ea" /> Requires outreach
+          </div>
         </div>
 
-        <div className="card metric-card" style={{ padding: '20px', backgroundColor: '#fff', borderTop: '4px solid #eab308' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-gray)' }}>
-            <span style={{ fontSize: '18px', fontWeight: 600 }}>OTP Pending</span>
-            <KeyRound size={18} />
+        <div className="card" style={{ padding: '24px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '16px', background: 'linear-gradient(145deg, #ffffff, #f8fafc)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Completed Today</div>
+              <div style={{ fontSize: '36px', fontWeight: 700, color: 'var(--text-dark)', lineHeight: '1', letterSpacing: '-1px' }}>{completedToday}</div>
+            </div>
+            <div style={{ padding: '12px', borderRadius: '12px', backgroundColor: '#dcfce7', color: '#16a34a', boxShadow: '0 4px 12px rgba(22, 163, 74, 0.15)' }}>
+              <CheckCircle2 size={22} strokeWidth={2.5} />
+            </div>
           </div>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px' }}>{otpPending}</div>
-          <div style={{ fontSize: '18px', color: 'var(--text-gray)', marginTop: '4px' }}>Awaiting code</div>
+          <div style={{ fontSize: '13px', color: '#16a34a', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
+            <Activity size={14} /> + Daily target
+          </div>
         </div>
 
-        <div className="card metric-card" style={{ padding: '20px', backgroundColor: '#fff', borderTop: '4px solid #10b981' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-gray)' }}>
-            <span style={{ fontSize: '18px', fontWeight: 600 }}>Completed Today</span>
-            <CheckCircle2 size={18} />
-          </div>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px' }}>{completedToday}</div>
-          <div style={{ fontSize: '18px', color: '#10b981', marginTop: '4px', fontWeight: 600 }}>+ Daily target</div>
-        </div>
-
-        <div className="card metric-card" style={{ padding: '20px', backgroundColor: '#fff', borderTop: '4px solid #ef4444' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-gray)' }}>
-            <span style={{ fontSize: '18px', fontWeight: 600 }}>Overdue</span>
-            <AlertTriangle size={18} />
-          </div>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px' }}>{slaRiskCases.length}</div>
-          <div style={{ fontSize: '11px', color: '#ef4444', marginTop: '4px', fontWeight: 600 }}>Action required</div>
-        </div>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
-        {/* Top Row: Quick Actions and Recent Activity */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px', alignItems: 'start' }}>
-          
-          {/* QUICK ACTION CENTER */}
-          <div className="card" style={{ padding: '20px', backgroundColor: '#fff' }}>
-            <h3 style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-dark)', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '1px' }}>Quick Actions</h3>
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <button className="btn btn-outline" onClick={() => navigate('/exec/tasks/mine')} style={{ flex: 1, padding: '10px', fontSize: '13px', display: 'flex', justifyContent: 'center', gap: '6px' }}>
-                <Briefcase size={16} /> Assigned To Me
-              </button>
-              <button className="btn btn-outline" onClick={() => navigate('/exec/tasks/mine')} style={{ flex: 1, padding: '10px', fontSize: '13px', display: 'flex', justifyContent: 'center', gap: '6px' }}>
-                <PlaySquare size={16} /> Resume Last
-              </button>
-            </div>
-          </div>
-
-          {/* TODAY'S ACTIVITY TIMELINE */}
-          <div className="card" style={{ padding: '20px', backgroundColor: '#fff', flex: 1 }}>
-            <h3 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-dark)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Clock size={16} color="var(--primary-blue)" /> My Recent Activity
-            </h3>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', position: 'relative' }}>
-              {allTimelineEvents.length === 0 ? (
-                <div style={{ fontSize: '13px', color: 'var(--text-gray)' }}>No recent activity.</div>
-              ) : (
-                allTimelineEvents.map((evt, idx) => (
-                  <div key={idx} style={{ display: 'flex', gap: '12px', position: 'relative' }}>
-                    {idx !== allTimelineEvents.length - 1 && (
-                      <div style={{ position: 'absolute', top: '24px', left: '11px', bottom: '-16px', width: '2px', backgroundColor: 'var(--border-color)' }}></div>
-                    )}
-                    <div style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: 'var(--bg-secondary)', border: '2px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1 }}>
-                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--primary-blue)' }}></div>
-                    </div>
-                    <div style={{ flex: 1, paddingBottom: '4px' }}>
-                      <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-dark)' }}>{formatEventMessage(evt)}</div>
-                      <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '2px' }}>{new Date(evt.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-
-        </div>
-
           {/* MY ACTIVE CASES TABLE */}
-          <div className="card" style={{ padding: '24px', backgroundColor: '#fff', overflowX: 'auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-dark)' }}>Available Tasks</h3>
-              <button className="btn btn-outline" onClick={() => navigate('/exec/tasks/available')} style={{ padding: '6px 12px', fontSize: '12px' }}>
-                View All <ChevronRight size={14} style={{ marginLeft: '4px' }} />
+          <div className="card" style={{ padding: '28px', backgroundColor: '#fff', border: 'none', boxShadow: '0 8px 30px rgba(0,0,0,0.04)', borderRadius: '20px', overflowX: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <div>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Inbox size={20} color="var(--primary-blue)" /> Available Tasks
+                </h3>
+                <p style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '4px', fontWeight: 500 }}>Tasks ready to be assigned and verified.</p>
+              </div>
+              <button className="btn btn-outline" onClick={() => navigate('/exec/tasks/available')} style={{ padding: '8px 16px', fontSize: '13px', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
+                View All <ChevronRight size={16} />
               </button>
             </div>
 
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0', textAlign: 'left' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid var(--border-color)', backgroundColor: '#f8fafc' }}>
-                  <th style={{ padding: '12px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>EMPLOYEE</th>
-                  <th style={{ padding: '12px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>COMPANY</th>
-                  <th style={{ padding: '12px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>SERVICE TYPE</th>
-                  <th style={{ padding: '12px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>STATUS</th>
-                  <th style={{ padding: '12px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>OVERDUE </th>
-                  <th style={{ padding: '12px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>ACTIONS</th>
+                <tr>
+                  <th style={{ padding: '16px', fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid var(--border-color)' }}>Employee</th>
+                  <th style={{ padding: '16px', fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid var(--border-color)' }}>Company</th>
+                  <th style={{ padding: '16px', fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid var(--border-color)' }}>Service Type</th>
+                  <th style={{ padding: '16px', fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid var(--border-color)' }}>Status</th>
+                  <th style={{ padding: '16px', fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid var(--border-color)' }}>SLA</th>
+                  <th style={{ padding: '16px', fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid var(--border-color)', textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {availableCases.filter(e => e.status !== 'completed' && e.status !== 'approved' && e.status !== 'rejected').map(emp => (
-                  <tr key={emp.id} className="table-row-hover" style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <td style={{ padding: '12px' }}>
-                      <div style={{ fontWeight: 600, fontSize: '13px', color: 'var(--text-dark)' }}>{emp.name}</div>
-                      <div style={{ fontSize: '11px', color: 'var(--text-gray)' }}>{emp.id}</div>
+                {availableCases.filter(e => e.status !== 'completed' && e.status !== 'approved' && e.status !== 'rejected').map((emp, index, arr) => (
+                  <tr key={emp.id} style={{ transition: 'all 0.2s ease', backgroundColor: 'transparent' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-hover)'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                    <td style={{ padding: '16px', borderBottom: index === arr.length - 1 ? 'none' : '1px solid var(--border-color)' }}>
+                      <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-dark)' }}>{emp.name}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '2px', fontFamily: 'monospace' }}>{emp.id}</div>
                     </td>
-                    <td style={{ padding: '12px', fontSize: '13px', color: 'var(--text-gray)' }}>{emp.company || 'N/A'}</td>
-                    <td style={{ padding: '12px', fontSize: '13px' }}>Identity Verification</td>
-                    <td style={{ padding: '12px' }}>
-                      <span className={`badge ${getStatusBadge(emp.status)}`}>{emp.status.replace('-', ' ')}</span>
+                    <td style={{ padding: '16px', borderBottom: index === arr.length - 1 ? 'none' : '1px solid var(--border-color)', fontSize: '14px', color: 'var(--text-dark)', fontWeight: 500 }}>{emp.company || 'N/A'}</td>
+                    <td style={{ padding: '16px', borderBottom: index === arr.length - 1 ? 'none' : '1px solid var(--border-color)', fontSize: '14px', color: 'var(--text-gray)' }}>Identity Verification</td>
+                    <td style={{ padding: '16px', borderBottom: index === arr.length - 1 ? 'none' : '1px solid var(--border-color)' }}>
+                      <span className={`badge ${getStatusBadge(emp.status)}`} style={{ padding: '6px 12px', borderRadius: '8px', fontSize: '11px' }}>{emp.status.replace('-', ' ')}</span>
                     </td>
-                    <td style={{ padding: '12px' }}>
+                    <td style={{ padding: '16px', borderBottom: index === arr.length - 1 ? 'none' : '1px solid var(--border-color)' }}>
                       <span style={{
                         fontSize: '12px',
-                        fontWeight: 600,
+                        fontWeight: 700,
                         color: getSlaRiskColor(emp.slaStatus, emp.priority),
                         backgroundColor: `${getSlaRiskColor(emp.slaStatus, emp.priority)}15`,
-                        padding: '4px 8px',
-                        borderRadius: '4px'
+                        padding: '6px 12px',
+                        borderRadius: '8px'
                       }}>
                         {emp.slaStatus || 'On Track'}
                       </span>
                     </td>
-                    <td style={{ padding: '12px' }}>
-                      <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-start' }}>
-                        <button className="btn btn-outline" onClick={() => setPreviewTask(emp)} style={{ padding: '6px 10px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <Eye size={14} /> Preview
+                    <td style={{ padding: '16px', borderBottom: index === arr.length - 1 ? 'none' : '1px solid var(--border-color)', textAlign: 'right' }}>
+                      <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                        <button className="btn btn-outline" onClick={() => setPreviewTask(emp)} style={{ padding: '8px 12px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px', borderRadius: '8px' }}>
+                          <Eye size={16} /> Preview
                         </button>
-                        <button className="btn btn-primary" onClick={() => setAssignConfirmTask(emp)} style={{ padding: '6px 10px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <UserPlus size={14} /> Assign To Me
+                        <button className="btn btn-primary" onClick={() => setAssignConfirmTask(emp)} style={{ padding: '8px 12px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(37, 99, 235, 0.2)' }}>
+                          <UserPlus size={16} /> Assign
                         </button>
                       </div>
                     </td>
@@ -410,54 +377,60 @@ export const Dashboard = () => {
           </div>
 
           {/* TASKS ASSIGNED TO ME TABLE */}
-          <div className="card" style={{ padding: '24px', backgroundColor: '#fff', overflowX: 'auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-dark)' }}>Tasks Assigned To Me</h3>
-              <button className="btn btn-outline" onClick={() => navigate('/exec/tasks/mine')} style={{ padding: '6px 12px', fontSize: '12px' }}>
-                View All <ChevronRight size={14} style={{ marginLeft: '4px' }} />
+          {/* TASKS ASSIGNED TO ME TABLE */}
+          <div className="card" style={{ padding: '28px', backgroundColor: '#fff', border: 'none', boxShadow: '0 8px 30px rgba(0,0,0,0.04)', borderRadius: '20px', overflowX: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <div>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Briefcase size={20} color="var(--primary-blue)" /> Tasks Assigned To Me
+                </h3>
+                <p style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '4px', fontWeight: 500 }}>Your active verifications to process.</p>
+              </div>
+              <button className="btn btn-outline" onClick={() => navigate('/exec/tasks/mine')} style={{ padding: '8px 16px', fontSize: '13px', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
+                View All <ChevronRight size={16} />
               </button>
             </div>
 
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0', textAlign: 'left' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid var(--border-color)', backgroundColor: '#f8fafc' }}>
-                  <th style={{ padding: '12px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>EMPLOYEE</th>
-                  <th style={{ padding: '12px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>COMPANY</th>
-                  <th style={{ padding: '12px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>STATUS</th>
-                  <th style={{ padding: '12px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>OVERDUE </th>
-                  <th style={{ padding: '12px', fontSize: '11px', fontWeight: 600, color: 'var(--text-gray)' }}>ACTIONS</th>
+                <tr>
+                  <th style={{ padding: '16px', fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid var(--border-color)' }}>Employee</th>
+                  <th style={{ padding: '16px', fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid var(--border-color)' }}>Company</th>
+                  <th style={{ padding: '16px', fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid var(--border-color)' }}>Status</th>
+                  <th style={{ padding: '16px', fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid var(--border-color)' }}>SLA</th>
+                  <th style={{ padding: '16px', fontSize: '12px', fontWeight: 700, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid var(--border-color)', textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {assignedTasks.map(emp => (
-                  <tr key={emp.id} className="table-row-hover" style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <td style={{ padding: '12px' }}>
-                      <div style={{ fontWeight: 600, fontSize: '13px', color: 'var(--text-dark)' }}>{emp.name}</div>
-                      <div style={{ fontSize: '11px', color: 'var(--text-gray)' }}>{emp.employeeCode}</div>
+                {assignedTasks.map((emp, index, arr) => (
+                  <tr key={emp.id} style={{ transition: 'all 0.2s ease', backgroundColor: 'transparent' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-hover)'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                    <td style={{ padding: '16px', borderBottom: index === arr.length - 1 ? 'none' : '1px solid var(--border-color)' }}>
+                      <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-dark)' }}>{emp.name}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '2px', fontFamily: 'monospace' }}>{emp.employeeCode || emp.id}</div>
                     </td>
-                    <td style={{ padding: '12px', fontSize: '13px', color: 'var(--text-gray)' }}>{emp.company || 'N/A'}</td>
-                    <td style={{ padding: '12px' }}>
-                      <span className={`badge ${getStatusBadge(emp.status)}`}>{(emp.status || 'assigned').replace('-', ' ')}</span>
+                    <td style={{ padding: '16px', borderBottom: index === arr.length - 1 ? 'none' : '1px solid var(--border-color)', fontSize: '14px', color: 'var(--text-dark)', fontWeight: 500 }}>{emp.company || 'N/A'}</td>
+                    <td style={{ padding: '16px', borderBottom: index === arr.length - 1 ? 'none' : '1px solid var(--border-color)' }}>
+                      <span className={`badge ${getStatusBadge(emp.status)}`} style={{ padding: '6px 12px', borderRadius: '8px', fontSize: '11px' }}>{(emp.status || 'assigned').replace('-', ' ')}</span>
                     </td>
-                    <td style={{ padding: '12px' }}>
+                    <td style={{ padding: '16px', borderBottom: index === arr.length - 1 ? 'none' : '1px solid var(--border-color)' }}>
                       <span style={{
                         fontSize: '12px',
-                        fontWeight: 600,
+                        fontWeight: 700,
                         color: getSlaRiskColor(emp.slaStatus, emp.priority),
                         backgroundColor: `${getSlaRiskColor(emp.slaStatus, emp.priority)}15`,
-                        padding: '4px 8px',
-                        borderRadius: '4px'
+                        padding: '6px 12px',
+                        borderRadius: '8px'
                       }}>
                         {emp.slaStatus || 'On Track'}
                       </span>
                     </td>
-                    <td style={{ padding: '12px' }}>
+                    <td style={{ padding: '16px', borderBottom: index === arr.length - 1 ? 'none' : '1px solid var(--border-color)', textAlign: 'right' }}>
                       <button
-                        className="btn btn-secondary"
+                        className="btn btn-outline"
                         onClick={() => navigate(`/exec/workspace/${emp.id}`)}
-                        style={{ padding: '6px 10px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}
+                        style={{ padding: '8px 12px', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '6px', borderRadius: '8px', color: '#2563eb', borderColor: '#bfdbfe', backgroundColor: '#eff6ff' }}
                       >
-                        <PlaySquare size={14} /> Resume
+                        <PlaySquare size={16} /> Resume Workspace
                       </button>
                     </td>
                   </tr>
@@ -472,12 +445,60 @@ export const Dashboard = () => {
               </tbody>
             </table>
           </div>
+
+        {/* Top Row: Quick Actions and Recent Activity */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px', alignItems: 'start' }}>
+          
+          {/* QUICK ACTION CENTER */}
+          <div className="card" style={{ padding: '28px', backgroundColor: '#fff', border: 'none', boxShadow: '0 8px 30px rgba(0,0,0,0.04)', borderRadius: '20px' }}>
+            <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Briefcase size={20} color="var(--primary-blue)" /> Quick Actions
+            </h3>
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+              <button className="btn btn-outline" onClick={() => navigate('/exec/tasks/mine')} style={{ flex: 1, padding: '14px', fontSize: '14px', fontWeight: 600, display: 'flex', justifyContent: 'center', gap: '8px', borderRadius: '12px' }}>
+                <Briefcase size={18} /> Assigned To Me
+              </button>
+              <button className="btn btn-primary" onClick={() => navigate('/exec/tasks/mine')} style={{ flex: 1, padding: '14px', fontSize: '14px', fontWeight: 600, display: 'flex', justifyContent: 'center', gap: '8px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(37, 99, 235, 0.2)' }}>
+                <PlaySquare size={18} /> Resume Last
+              </button>
+            </div>
+          </div>
+
+          {/* TODAY'S ACTIVITY TIMELINE */}
+          <div className="card" style={{ padding: '28px', backgroundColor: '#fff', flex: 1, border: 'none', boxShadow: '0 8px 30px rgba(0,0,0,0.04)', borderRadius: '20px' }}>
+            <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Clock size={20} color="var(--primary-blue)" /> My Recent Activity
+            </h3>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', position: 'relative' }}>
+              {allTimelineEvents.length === 0 ? (
+                <div style={{ fontSize: '14px', color: 'var(--text-gray)', fontStyle: 'italic' }}>No recent activity.</div>
+              ) : (
+                allTimelineEvents.map((evt, idx) => (
+                  <div key={idx} style={{ display: 'flex', gap: '16px', position: 'relative' }}>
+                    {idx !== allTimelineEvents.length - 1 && (
+                      <div style={{ position: 'absolute', top: '28px', left: '11px', bottom: '-20px', width: '2px', backgroundColor: 'var(--border-color)', opacity: 0.7 }}></div>
+                    )}
+                    <div style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: '#e0f2fe', border: '2px solid #fff', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1, boxShadow: '0 0 0 1px #e0f2fe' }}>
+                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#0284c7' }}></div>
+                    </div>
+                    <div style={{ flex: 1, paddingBottom: '4px' }}>
+                      <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-dark)' }}>{formatEventMessage(evt)}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '4px', fontWeight: 500 }}>{new Date(evt.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+
+        </div>
       </div>
 
       {/* TASK PREVIEW DRAWER */}
       {previewTask && (
         <>
-          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 100 }} onClick={() => setPreviewTask(null)}></div>
+          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', zIndex: 100 }} onClick={() => setPreviewTask(null)}></div>
           <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, width: '450px', backgroundColor: '#fff', zIndex: 101, display: 'flex', flexDirection: 'column', boxShadow: '-4px 0 24px rgba(0,0,0,0.1)', animation: 'slideInRight 0.3s ease-out' }}>
 
             <style>{`

@@ -31,6 +31,7 @@ import { HRChangePassword } from "./pages/hr/ChangePassword";
 // import { mockDb } from './utils/mockDb';
 import { supabase } from './utils/supabase';
 import { ShieldCheck, UserCheck, ShieldAlert, LogIn, ArrowRight, BadgeIndianRupee, Eye, EyeOff, Building, Mail, Lock, Activity, Users, Settings, Layers, Search, MapPin, RefreshCw } from 'lucide-react';
+import VerificationFlowDiagram from './components/common/VerificationFlowDiagram';
 
 // Initialize Mock Database
 // mockDb.init();
@@ -244,7 +245,7 @@ const Login = () => {
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff', fontFamily: '"Inter", sans-serif' }}>
       {/* Left Side */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 8%', maxWidth: '600px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '64px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', backgroundColor: '#f0f4ff', borderRadius: '10px', color: '#4f46e5' }}>
             <Building size={22} strokeWidth={2.5} />
           </div>
@@ -341,40 +342,14 @@ const Login = () => {
 
           <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#0f172a', lineHeight: 1.1, marginBottom: '16px', letterSpacing: '-0.5px' }}>
             Coordinate your entire<br />
-            <span style={{ color: '#4f46e5' }}>KPC lifecycle.</span>
+            <span style={{ color: '#4f46e5' }}>Verification lifecycle.</span>
           </h2>
           
           <p style={{ fontSize: '15px', color: '#64748b', marginBottom: '40px', maxWidth: '380px', lineHeight: 1.5 }}>
             A unified workspace for HR submissions, operations management, and field verification.
           </p>
 
-          <div style={{ position: 'relative', height: '300px', border: '1px solid #f1f5f9', borderRadius: '20px', backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '24px 24px', backgroundColor: '#fafaf9' }}>
-            {/* SVG Connecting Lines */}
-            <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-              <path d="M120,60 L400,80 L200,150 L420,170" fill="none" stroke="#e2e8f0" strokeWidth="2" />
-            </svg>
-
-            {/* Nodes */}
-            <div style={{ position: 'absolute', top: '40px', left: '40px', display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: '#fff', padding: '8px 16px 8px 8px', borderRadius: '100px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03), 0 0 0 1px rgba(0,0,0,0.02)' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3b82f6' }}><Users size={16} /></div>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#0f172a' }}>Client HR</span>
-            </div>
-
-            <div style={{ position: 'absolute', top: '60px', right: '40px', display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: '#fff', padding: '8px 16px 8px 8px', borderRadius: '100px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03), 0 0 0 1px rgba(0,0,0,0.02)' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#f5f3ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#8b5cf6' }}><Settings size={16} /></div>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#0f172a' }}>Ops Manager</span>
-            </div>
-
-            <div style={{ position: 'absolute', top: '130px', left: '100px', display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: '#fff', padding: '8px 16px 8px 8px', borderRadius: '100px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03), 0 0 0 1px rgba(0,0,0,0.02)' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#f0fdf4', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#22c55e' }}><MapPin size={16} /></div>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#0f172a' }}>Verification</span>
-            </div>
-
-            <div style={{ position: 'absolute', top: '150px', right: '100px', display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: '#fff', padding: '8px 16px 8px 8px', borderRadius: '100px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03), 0 0 0 1px rgba(0,0,0,0.02)' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#fefce8', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#eab308' }}><Search size={16} /></div>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#0f172a' }}>Review</span>
-            </div>
-          </div>
+          <VerificationFlowDiagram />
         </div>
 
         <div style={{ position: 'absolute', bottom: '24px', left: 0, right: 0, textAlign: 'center', fontSize: '12px', color: '#94a3b8', fontWeight: 500 }}>

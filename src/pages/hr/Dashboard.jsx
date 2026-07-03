@@ -277,7 +277,7 @@ export const Dashboard = () => {
           <button
             className="btn btn-primary"
             onClick={() => handleQuickAction('create')}
-            style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px', fontSize: '24px' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 18px', fontSize: '14px', borderRadius: '8px' }}
           >
             <PlusCircle size={16} /> Create Employee
           </button>
@@ -345,59 +345,59 @@ export const Dashboard = () => {
 
         <div className="card metric-card" style={{ padding: '20px', backgroundColor: '#fff', '--accent-color': '#0b4baf' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--text-gray)' }}>
-            <span style={{ fontSize: '23px', fontWeight: 600 }}>Total Employees</span>
+            <span style={{ fontSize: '14px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Employees</span>
             <Users size={18} />
           </div>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px' }}>{totalEmployees}</div>
-          <div style={{ fontSize: '16px', color: 'var(--text-gray)', marginTop: '4px' }}>Saved or registered</div>
+          <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px', lineHeight: 1 }}>{totalEmployees}</div>
+          <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '6px' }}>Saved or registered</div>
         </div>
 
         <div className="card metric-card" style={{ padding: '20px', backgroundColor: '#fff', '--accent-color': '#3b82f6' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--text-gray)' }}>
-            <span style={{ fontSize: '23px', fontWeight: 600 }}>In Progress</span>
+            <span style={{ fontSize: '14px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>In Progress</span>
             <Clock size={18} />
           </div>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px' }}>{inProgressCount}</div>
-          <div style={{ fontSize: '16px', color: 'var(--text-gray)', marginTop: '4px' }}>Active verification checks</div>
+          <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px', lineHeight: 1 }}>{inProgressCount}</div>
+          <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '6px' }}>Active verification checks</div>
         </div>
 
         <div className="card metric-card" style={{ padding: '20px', backgroundColor: '#fff', '--accent-color': '#10b981' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--text-gray)' }}>
-            <span style={{ fontSize: '23px', fontWeight: 600 }}>Approved</span>
+            <span style={{ fontSize: '14px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Approved</span>
             <CheckCircle2 size={18} />
           </div>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px' }}>{approvedCount}</div>
-          <div style={{ fontSize: '16px', color: 'var(--text-gray)', marginTop: '4px' }}>Verification successful</div>
+          <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px', lineHeight: 1 }}>{approvedCount}</div>
+          <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '6px' }}>Verification successful</div>
         </div>
 
         <div className="card metric-card" style={{ padding: '20px', backgroundColor: '#fff', '--accent-color': '#ffe600ff' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--text-gray)' }}>
-            <span style={{ fontSize: '23px', fontWeight: 600 }}>Pending</span>
+            <span style={{ fontSize: '14px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Pending</span>
             <CheckCircle2 size={18} />
           </div>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px' }}>{pendingCount}</div>
-          <div style={{ fontSize: '16px', color: 'var(--text-gray)', marginTop: '4px' }}>Verification successful</div>
+          <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px', lineHeight: 1 }}>{pendingCount}</div>
+          <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '6px' }}>Requires processing</div>
         </div>
 
         <div className="card metric-card" style={{ padding: '20px', backgroundColor: '#fff', '--accent-color': '#ef4444' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--text-gray)' }}>
-            <span style={{ fontSize: '23px', fontWeight: 600 }}>Rejected</span>
+            <span style={{ fontSize: '14px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Rejected</span>
             <AlertTriangle size={18} />
           </div>
-          <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px' }}>{rejectedCount}</div>
-          <div style={{ fontSize: '16px', color: 'var(--text-gray)', marginTop: '4px' }}>Requires action</div>
+          <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-dark)', marginTop: '12px', lineHeight: 1 }}>{rejectedCount}</div>
+          <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '6px' }}>Requires action</div>
         </div>
 
       </div>
 
       {/* 4. Recent Employee Submissions */}
       <div className="card" style={{ padding: '24px', backgroundColor: '#fff' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <div>
-            <h3 style={{ fontSize: '26px', fontWeight: 600, color: 'var(--text-dark)' }}>Recent Employee Submissions</h3>
-            <p style={{ fontSize: '18px', color: 'var(--text-gray)', marginTop: '4px' }}>Latest verifications dispatched for screening.</p>
+            <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-dark)' }}>Recent Employee Submissions</h3>
+            <p style={{ fontSize: '14px', color: 'var(--text-gray)', marginTop: '4px' }}>Latest verifications dispatched for screening.</p>
           </div>
-          <button className="btn btn-outline" onClick={() => navigate('/hr/employees')} style={{ padding: '6px 12px', fontSize: '18px' }}>
+          <button className="btn btn-outline" onClick={() => navigate('/hr/employees')} style={{ padding: '6px 14px', fontSize: '13px' }}>
             View Employee List <ChevronRight size={14} style={{ marginLeft: '4px' }} />
           </button>
         </div>
@@ -409,38 +409,38 @@ export const Dashboard = () => {
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-color)', backgroundColor: '#f8fafc' }}>
-                  <th style={{ padding: '12px 16px', fontSize: '18px', fontWeight: 600, color: 'var(--text-gray)' }}>EMPLOYEE NAME</th>
-                  <th style={{ padding: '12px 16px', fontSize: '18px', fontWeight: 600, color: 'var(--text-gray)' }}>SUBMISSION DATE</th>
-                  <th style={{ padding: '12px 16px', fontSize: '18px', fontWeight: 600, color: 'var(--text-gray)' }}>SERVICE TYPE</th>
-                  <th style={{ padding: '12px 16px', fontSize: '18px', fontWeight: 600, color: 'var(--text-gray)' }}>STATUS</th>
-                  <th style={{ padding: '12px 16px', fontSize: '18px', fontWeight: 600, color: 'var(--text-gray)' }}>ACTIONS</th>
+                  <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase' }}>EMPLOYEE NAME</th>
+                  <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase' }}>SUBMISSION DATE</th>
+                  <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase' }}>SERVICE TYPE</th>
+                  <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase' }}>STATUS</th>
+                  <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase' }}>ACTIONS</th>
                 </tr>
               </thead>
               <tbody>
                 {recentSubmissions.map((row) => (
                   <tr key={row.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <td style={{ padding: '12px 16px' }}>
-                      <div style={{ fontWeight: 400, fontSize: '25px' }}>{row.full_name}</div>
-                      <div style={{ fontSize: '12px', color: 'var(--text-gray)' }}>{row.id}</div>
+                    <td style={{ padding: '16px' }}>
+                      <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-dark)' }}>{row.full_name}</div>
+                      <div style={{ fontSize: '13px', color: 'var(--text-gray)', marginTop: '2px' }}>{row.id}</div>
                     </td>
-                    <td style={{ padding: '12px 16px', fontSize: '15px', color: 'black' }}>
+                    <td style={{ padding: '16px', fontSize: '13px', color: 'var(--text-dark)' }}>
                       {row.created_at ? new Date(row.created_at).toLocaleDateString() : 'N/A'}
                     </td>
-                    <td style={{ padding: '12px 16px', fontSize: '15px' }}>
+                    <td style={{ padding: '16px', fontSize: '13px', color: 'var(--text-dark)' }}>
                       {getServiceType(row)}
                     </td>
-                    <td style={{ padding: '12px 16px' }}>
+                    <td style={{ padding: '16px' }}>
                       <span className={`badge ${getStatusClass(row.verification_status || row.status)}`}>
                         {(row.verification_status || row.status || 'pending').replace('-', ' ')}
                       </span>
                     </td>
-                    <td style={{ padding: '12px 16px' }}>
+                    <td style={{ padding: '16px' }}>
                       <button
                         className="btn btn-outline"
                         onClick={() => navigate('/hr/employees', { state: { viewEmployeeId: row.id } })}
-                        style={{ padding: '4px 8px', fontSize: '18px' }}
+                        style={{ padding: '6px 12px', fontSize: '13px' }}
                       >
-                        <Eye size={15} style={{ marginRight: '4px' }} /> View
+                        <Eye size={14} style={{ marginRight: '4px' }} /> View
                       </button>
                     </td>
                   </tr>

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { mockDb } from '../../utils/mockDb';
 import { getSupabaseEmployees } from '../../utils/supabase';
+import PageHeader from '../../components/common/PageHeader';
 const CATEGORIES = [
   { id: 'all', label: 'All Notifications' },
   { id: 'verification', label: 'Verification Updates' },
@@ -149,13 +150,11 @@ export const Notifications = () => {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
-          <h1 style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Bell size={28} color="var(--primary-blue)" />
-            Notifications Center
-          </h1>
-          <p style={{ color: 'var(--text-gray)', marginTop: '8px', fontSize: '15px' }}>
-            You have <span style={{ fontWeight: 700, color: unreadCount > 0 ? '#ef4444' : 'var(--text-primary)' }}>{unreadCount} unread</span> notifications.
-          </p>
+          <PageHeader 
+            title="Notifications Center"
+            subtitle={<>You have <span style={{ fontWeight: 700, color: unreadCount > 0 ? '#ef4444' : 'var(--text-primary)' }}>{unreadCount} unread</span> notifications.</>}
+            icon={Bell}
+          />
         </div>
 
         <div style={{ display: 'flex', gap: '12px' }}>

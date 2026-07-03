@@ -98,27 +98,36 @@ export const CallVerificationPanel = ({ employee, onUpdate }) => {
     const session =
       JSON.parse(localStorage.getItem("kpc_session")) || {};
 
-    await supabase
+    const { error: insertError } = await supabase
       .from("call_logs")
       .insert({
-
         employee_id: employee.id,
-
         executive_id: session.userId,
-
         executive_name: session.userName,
-
         outcome: outcome.label,
-
         outcome_id: outcome.id,
-
         remarks: remarks,
-
         call_received: outcome.callReceived,
-
         otp_received: outcome.otpReceived
-
       });
+
+    if (insertError) {
+      console.error("Failed to save call log:", insertError);
+      alert("Failed to save call log to the database. " + insertError.message);
+    } else {
+      // Append the newly created log to state immediately to show in UI
+      setCallLogs(prev => [{
+        employee_id: employee.id,
+        executive_id: session.userId,
+        executive_name: session.userName,
+        outcome: outcome.label,
+        outcome_id: outcome.id,
+        remarks: remarks,
+        call_received: outcome.callReceived,
+        otp_received: outcome.otpReceived,
+        created_at: new Date().toISOString()
+      }, ...prev]);
+    }
 
     if (onUpdate) {
       await onUpdate({

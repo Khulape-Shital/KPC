@@ -1,0 +1,71 @@
+.flow-diagram-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-image: radial-gradient(var(--border-color, #e5e7eb) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-color: var(--bg-primary, #ffffff);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.flow-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.flow-nodes {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.flow-node-wrapper {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.flow-node {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 8px 8px;
+  background: white;
+  border-radius: 30px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-color, #f3f4f6);
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.node-text {
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+  font-size: 14px;
+}
+
+/* Colors matching the image */
+.bg-blue-50 { background-color: #eff6ff; }
+.text-blue-500 { color: #3b82f6; }
+
+.bg-purple-50 { background-color: #faf5ff; }
+.text-purple-500 { color: #a855f7; }
+
+.bg-green-50 { background-color: #f0fdf4; }
+.text-green-500 { color: #22c55e; }
+
+.bg-yellow-50 { background-color: #fefce8; }
+.text-yellow-500 { color: #eab308; }

@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { mockDb } from '../../utils/mockDb';
 import { supabase } from '../../utils/supabase';
+import PageHeader from '../../components/common/PageHeader';
 
 const SERVICE_TYPES = [
   { id: 'All', label: 'All Services' },
@@ -43,6 +44,10 @@ export const EmployeeList = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [quickViewEmployee, setQuickViewEmployee] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     mockDb.init();
@@ -197,15 +202,9 @@ export const EmployeeList = () => {
 
   // Helper: map internal state code to clean labels
   const getStatusLabel = (status) => {
-    switch (status) {
-      case 'in-progress': return 'badge-in-progress';
-      case 'cfc-verification': return 'badge-in-progress';
-      case 'final-client-invoice': return 'badge-in-progress';
-      case 'complete-report-submission': return 'badge-in-progress';
-      case 'approved': return 'badge-approved';
-      case 'rejected': return 'badge-rejected';
-      case 'completed': return 'badge-completed';
-    }
+    if (!status) return 'Unknown';
+    // Format status: e.g. "in-progress" -> "In Progress"
+    return status.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   };
 
   const getStatusClass = (status) => {
@@ -410,6 +409,16 @@ export const EmployeeList = () => {
 
     return matchSearch && matchTab && matchStatus && matchService && matchDate;
   });
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, filterStatus, filterService, startDate, endDate, currentTab, filterRejectedShortcut, filterPendingAction]);
+
+  const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
+  const paginatedEmployees = filteredEmployees.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   // Checkbox interactions
   const handleSelectAll = (e) => {
@@ -680,6 +689,7 @@ export const EmployeeList = () => {
     setCurrentTab('all');
     setFilterRejectedShortcut(false);
     setFilterPendingAction(false);
+    setCurrentPage(1);
   };
 
   return (
@@ -758,8 +768,10 @@ export const EmployeeList = () => {
       {/* Header Panel */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
-          <h1 style={{ fontSize: '35px', fontWeight: 700, color: 'var(--text-dark)' }}>Employee List</h1>
-          <p style={{ fontSize: '18px', color: 'var(--text-gray)', marginTop: '4px' }}>Register employees and track their credentials verification status.</p>
+          <PageHeader 
+            title="Employee List" 
+            subtitle="Register employees and track their credentials verification status." 
+          />
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
           <button className="btn btn-outline" style={{ backgroundColor: 'whitesmoke', fontSize: '17px' }} onClick={handleExportCSV}>
@@ -963,7 +975,7 @@ export const EmployeeList = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredEmployees.map((emp) => {
+              {paginatedEmployees.map((emp) => {
                 const docStatus = getDocCompleteness(emp);
                 const lastAct = getLastActivity(emp);
                 return (
@@ -981,19 +993,19 @@ export const EmployeeList = () => {
                       />
                     </td>
                     <td style={{ padding: '16px' }}>
-                      <div style={{ fontWeight: 600, fontSize: '18px', color: 'var(--text-dark)' }}>{emp.name}</div>
-                      <div style={{ fontSize: '15px', color: 'var(--text-gray)', marginTop: '2px' }}>{emp.id}</div>
+                      <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-dark)' }}>{emp.name}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '2px' }}>{emp.id}</div>
                     </td>
 
                     <td style={{ padding: '16px' }}>
-                      <div style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-dark)' }}>{getCreatedBy(emp)}</div>
-                      <div style={{ fontSize: '11px', color: 'var(--text-gray)', marginTop: '2px' }}>HR User</div>
+                      <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-dark)' }}>{getCreatedBy(emp)}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '2px' }}>HR User</div>
                     </td>
 
                     {/* 1. Completeness Cell */}
                     <td style={{ padding: '16px' }}>
                       <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-dark)' }}>{docStatus.text}</div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: docStatus.color, marginTop: '2px', fontWeight: 600 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: docStatus.color, marginTop: '2px', fontWeight: 600 }}>
                         <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', backgroundColor: docStatus.color }}></span>
                         {docStatus.state}
                       </div>
@@ -1012,7 +1024,7 @@ export const EmployeeList = () => {
                             <span
                               key={idx}
                               style={{
-                                fontSize: '11px',
+                                fontSize: '12px',
                                 padding: '3px 8px',
                                 borderRadius: '4px',
                                 backgroundColor: 'var(--primary-blue-light)',
@@ -1027,7 +1039,7 @@ export const EmployeeList = () => {
                         ) : (
                           <span
                             style={{
-                              fontSize: '11px',
+                              fontSize: '12px',
                               padding: '3px 8px',
                               borderRadius: '4px',
                               backgroundColor: 'var(--primary-blue-light)',
@@ -1044,7 +1056,7 @@ export const EmployeeList = () => {
                     {/* 3. Last Activity Cell */}
                     <td style={{ padding: '16px' }}>
                       <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-dark)' }}>{lastAct.action}</div>
-                      <div style={{ fontSize: '11px', color: 'var(--text-gray)', marginTop: '2px' }}>{lastAct.date}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '2px' }}>{lastAct.date}</div>
                     </td>
 
                     <td style={{ padding: '16px' }}>
@@ -1056,34 +1068,44 @@ export const EmployeeList = () => {
                           className="btn btn-outline"
                           onClick={() => handleDeleteEmployee(emp.id)}
                           style={{
-                            padding: '4px 8px',
-                            fontSize: '12px',
+                            padding: '6px',
                             color: '#dc2626',
-                            borderColor: '#fecaca'
+                            borderColor: '#fecaca',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
                           }}
+                          title="Delete"
                         >
-                          <Trash2 size={13} style={{ marginRight: '4px' }} />
-                          Delete
+                          <Trash2 size={16} />
                         </button>
                         {/* 4. Quick View Action */}
                         <button
                           className="btn btn-outline"
                           onClick={() => setQuickViewEmployee(emp)}
-                          style={{ padding: '4px 8px', fontSize: '12px' }}
+                          style={{ 
+                            padding: '6px', 
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                          title="Quick View"
                         >
-                          <Eye size={13} style={{ marginRight: '4px', fontSize: '15px' }} /> Quick View
+                          <Eye size={16} />
                         </button>
                         <button
                           className="btn btn-outline"
                           onClick={() => navigate(`/hr/employees/${emp.id}/edit`)}
                           style={{
-                            padding: '4px 8px',
-                            fontSize: '12px',
-                            color: 'var(--primary-blue)'
+                            padding: '6px',
+                            color: 'var(--primary-blue)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
                           }}
+                          title="Edit"
                         >
-                          <Edit3 size={13} style={{ marginRight: '4px' }} />
-                          Edit
+                          <Edit3 size={16} />
                         </button>
                       </div>
                     </td>
@@ -1093,11 +1115,62 @@ export const EmployeeList = () => {
             </tbody>
           </table>
         )}
+        
+        {/* Pagination */}
+        {!isLoading && totalPages > 1 && (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px', borderTop: '1px solid var(--border-color)', backgroundColor: '#fff' }}>
+            <span style={{ fontSize: '13px', color: 'var(--text-gray)' }}>
+              Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredEmployees.length)} of {filteredEmployees.length} entries
+            </span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button
+                className="btn btn-outline"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                style={{ padding: '6px 12px', fontSize: '13px' }}
+              >
+                Previous
+              </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                {[...Array(totalPages)].map((_, i) => (
+                  <button
+                    key={i + 1}
+                    onClick={() => setCurrentPage(i + 1)}
+                    style={{
+                      width: '30px',
+                      height: '30px',
+                      borderRadius: '6px',
+                      border: currentPage === i + 1 ? '1px solid var(--primary-blue)' : '1px solid var(--border-color)',
+                      backgroundColor: currentPage === i + 1 ? 'var(--primary-blue)' : '#fff',
+                      color: currentPage === i + 1 ? '#fff' : 'var(--text-dark)',
+                      fontSize: '13px',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+              <button
+                className="btn btn-outline"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                style={{ padding: '6px 12px', fontSize: '13px' }}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 4. Rich Quick View Side Drawer */}
       {quickViewEmployee && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 100, display: 'flex', justifyContent: 'flex-end' }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', zIndex: 100, display: 'flex', justifyContent: 'flex-end' }}>
           <div className="details-drawer" style={{ width: '520px', backgroundColor: '#fff', height: '100%', boxShadow: '-4px 0 25px rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column' }}>
 
             {/* Drawer Header */}

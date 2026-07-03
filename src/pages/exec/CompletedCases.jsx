@@ -112,6 +112,43 @@ export const CompletedCases = () => {
 
   return (
     <div className="page-container" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px', animation: 'fadeIn 0.5s ease-out' }}>
+      <style>
+        {`
+          @media print {
+            body { background-color: #fff; color: #000; margin: 0; padding: 0; }
+            .sidebar, .top-header, .no-print { display: none !important; }
+            .page-container { padding: 0 !important; margin: 0 !important; gap: 0 !important; }
+            .print-section {
+              position: relative !important;
+              width: 100% !important;
+              height: auto !important;
+              box-shadow: none !important;
+              border: none !important;
+              animation: none !important;
+            }
+            .print-scroll-area {
+              overflow: visible !important;
+              height: auto !important;
+              padding: 0 !important;
+            }
+            .print-always-show {
+              display: block !important;
+            }
+            .print-timeline-header {
+              display: block !important;
+              margin-top: 30px;
+              margin-bottom: 20px;
+              font-size: 16px;
+              font-weight: bold;
+              border-bottom: 2px solid #e2e8f0;
+              padding-bottom: 8px;
+            }
+          }
+          .print-timeline-header { display: none; }
+        `}
+      </style>
+
+      <div className="no-print" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -325,13 +362,14 @@ export const CompletedCases = () => {
           </div>
         </div>
 
+        </div>
       </div>
 
       {/* COMPLETED CASE DETAILS DRAWER */}
       {selectedCase && (
         <>
-          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 100 }} onClick={() => setSelectedCase(null)}></div>
-          <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, width: '500px', backgroundColor: '#fff', zIndex: 101, display: 'flex', flexDirection: 'column', boxShadow: '-4px 0 24px rgba(0,0,0,0.1)', animation: 'slideInRight 0.3s ease-out' }}>
+          <div className="no-print" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', zIndex: 100 }} onClick={() => setSelectedCase(null)}></div>
+          <div className="print-section" style={{ position: 'fixed', top: 0, right: 0, bottom: 0, width: '500px', backgroundColor: '#fff', zIndex: 101, display: 'flex', flexDirection: 'column', boxShadow: '-4px 0 24px rgba(0,0,0,0.1)', animation: 'slideInRight 0.3s ease-out' }}>
 
             <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#f8fafc' }}>
               <div>
@@ -340,13 +378,13 @@ export const CompletedCases = () => {
                 </h2>
                 <span style={{ fontSize: '12px', color: 'var(--text-gray)' }}>{selectedCase.id} • Completed {new Date(selectedCase.completionDate).toLocaleDateString()}</span>
               </div>
-              <button onClick={() => setSelectedCase(null)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--text-gray)' }}>
+              <button className="no-print" onClick={() => setSelectedCase(null)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--text-gray)' }}>
                 <X size={20} />
               </button>
             </div>
 
             {/* Tabs */}
-            <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)' }}>
+            <div className="no-print" style={{ display: 'flex', borderBottom: '1px solid var(--border-color)' }}>
               <button
                 onClick={() => setDrawerTab('details')}
                 style={{ flex: 1, padding: '12px', background: 'transparent', border: 'none', borderBottom: drawerTab === 'details' ? '2px solid var(--primary-blue)' : '2px solid transparent', color: drawerTab === 'details' ? 'var(--primary-blue)' : 'var(--text-gray)', fontWeight: 600, fontSize: '13px', cursor: 'pointer' }}
@@ -361,10 +399,10 @@ export const CompletedCases = () => {
               </button>
             </div>
 
-            <div style={{ padding: '24px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div className="print-scroll-area" style={{ padding: '24px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
-              {drawerTab === 'details' && (
-                <>
+              <div className="print-always-show" style={{ display: drawerTab === 'details' ? 'block' : 'none' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                   {/* Candidate Summary */}
                   <div>
                     <h3 style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px' }}>Candidate Summary</h3>
@@ -453,39 +491,48 @@ export const CompletedCases = () => {
                       </div>
                     </div>
                   </div>
-                </>
-              )}
-
-              {/* {drawerTab === 'timeline' && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', position: 'relative' }}>
-                  {selectedCase.timeline && selectedCase.timeline.slice().reverse().map((t, idx) => (
-                    <div key={idx} style={{ display: 'flex', gap: '12px', position: 'relative' }}>
-                      {idx !== selectedCase.timeline.length - 1 && (
-                        <div style={{ position: 'absolute', top: '16px', left: '7px', bottom: '-16px', width: '2px', backgroundColor: 'var(--border-color)' }}></div>
-                      )}
-                      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--bg-secondary)', border: '2px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1, marginTop: '2px' }}>
-                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--primary-blue)' }}></div>
-                      </div>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                          <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-dark)' }}>{t.event}</div>
-                          <div style={{ fontSize: '11px', color: 'var(--text-gray)' }}>{new Date(t.date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</div>
-                        </div>
-                        {t.details && (
-                          <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '4px' }}>{t.details}</div>
-                        )}
-                        <div style={{ fontSize: '10px', color: 'var(--text-light)', marginTop: '4px' }}>By: {t.user}</div>
-                      </div>
-                    </div>
-                  ))}
                 </div>
-              )} */}
+              </div>
+
+              <div className="print-always-show" style={{ display: drawerTab === 'timeline' ? 'block' : 'none', pageBreakBefore: 'always' }}>
+                <div className="print-timeline-header">Verification Timeline</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', position: 'relative' }}>
+                  {(!selectedCase.timeline || selectedCase.timeline.length === 0) ? (
+                    <div style={{ fontSize: '13px', color: 'var(--text-gray)' }}>No timeline events found.</div>
+                  ) : (
+                    selectedCase.timeline.slice().reverse().map((t, idx) => (
+                      <div key={idx} style={{ display: 'flex', gap: '12px', position: 'relative' }}>
+                        {idx !== selectedCase.timeline.length - 1 && (
+                          <div style={{ position: 'absolute', top: '16px', left: '7px', bottom: '-16px', width: '2px', backgroundColor: 'var(--border-color)' }}></div>
+                        )}
+                        <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--bg-secondary)', border: '2px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1, marginTop: '2px' }}>
+                          <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--primary-blue)' }}></div>
+                        </div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                            <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-dark)' }}>{t.event}</div>
+                            <div style={{ fontSize: '11px', color: 'var(--text-gray)' }}>{new Date(t.date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</div>
+                          </div>
+                          {t.details && (
+                            <div style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '4px' }}>{t.details}</div>
+                          )}
+                          <div style={{ fontSize: '10px', color: 'var(--text-light)', marginTop: '4px' }}>By: {t.user}</div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
 
             </div>
 
             {/* Actions */}
-            <div style={{ padding: '20px 24px', borderTop: '1px solid var(--border-color)', backgroundColor: '#fff', display: 'flex', gap: '12px' }}>
-              <button className="btn btn-primary" style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
+            <div className="no-print" style={{ padding: '20px 24px', borderTop: '1px solid var(--border-color)', backgroundColor: '#fff', display: 'flex', gap: '12px' }}>
+              <button 
+                className="btn btn-primary" 
+                onClick={() => window.print()}
+                style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}
+              >
                 <Download size={16} /> Download Verification Report
               </button>
             </div>

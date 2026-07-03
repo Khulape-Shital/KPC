@@ -12,6 +12,7 @@ import { mockDb } from '../../utils/mockDb';
 import { supabase } from "../../utils/supabase";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import PageHeader from '../../components/common/PageHeader';
 
 // const ALL_SERVICES = [
 //   { id: 'Identity Verification', name: 'Identity Verification', desc: 'Validates Aadhaar Card and PAN Card details.' },
@@ -165,7 +166,7 @@ export const CreateEmployee = () => {
             .from("company_services")
             .select("*")
             .eq("company_id", session.clientId);
-            console.log("Session: "+ session);
+          console.log("Session: " + session);
 
           if (!svcError && svcData) {
             setCompanyServices(svcData);
@@ -287,9 +288,9 @@ export const CreateEmployee = () => {
       req.add('Aadhaar Card');
       req.add('PAN Card');
     }
-    if (selectedServices.includes('Address Verification')) {
-      req.add('Light Bill/Rent Agreement');
-    }
+    // if (selectedServices.includes('Address Verification')) {
+    //   req.add('Light Bill/Rent Agreement');
+    // }
     if (selectedServices.includes('Police Verification')) {
       req.add('Aadhaar Card');
       req.add('PAN Card');
@@ -963,10 +964,10 @@ export const CreateEmployee = () => {
       {/* Header Panel */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h1 style={{ fontSize: '26px', fontWeight: 700, color: 'var(--text-dark)' }}>
-            {editEmployeeId ? 'Resume Verification Form' : 'New Verification Request'}
-          </h1>
-          <p style={{ color: 'var(--text-gray)', marginTop: '4px' }}>Submit candidate credentials and upload proof documents for verification.</p>
+          <PageHeader
+            title={editEmployeeId ? 'Resume Verification Form' : 'New Verification Request'}
+            subtitle="Submit candidate credentials and upload proof documents for verification."
+          />
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
           <button className="btn btn-outline" onClick={handleSaveDraft} style={{ backgroundColor: '#fff' }}>
@@ -1234,7 +1235,7 @@ export const CreateEmployee = () => {
                   return (
                     <div
                       key={svc.id}
-                      className={`card service-card ${isSelected ? 'selected' : ''}`}
+                      className={`service-card ${isSelected ? 'selected' : ''}`}
                       onClick={() => {
                         if (isSelected) {
                           if (selectedServices.length > 1) {
@@ -1247,31 +1248,52 @@ export const CreateEmployee = () => {
                         }
                       }}
                       style={{
-                        padding: '20px',
+                        padding: '24px 20px',
                         borderRadius: '12px',
                         display: 'flex',
+                        alignItems: 'center',
                         gap: '16px',
                         cursor: 'pointer',
-                        border: `2px solid ${isSelected ? 'var(--primary-blue)' : 'var(--border-color)'}`,
-                        backgroundColor: isSelected ? 'var(--primary-blue-light)' : '#fff'
+                        border: `2px solid ${isSelected ? 'var(--primary-blue)' : '#e2e8f0'}`,
+                        backgroundColor: isSelected ? '#f0f9ff' : '#fff',
+                        boxShadow: isSelected ? '0 4px 12px rgba(11, 75, 175, 0.08)' : '0 1px 3px rgba(0,0,0,0.02)',
+                        transition: 'all 0.2s ease',
+                        position: 'relative',
+                        overflow: 'hidden'
                       }}
                     >
+                      {isSelected && (
+                        <div style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '4px',
+                          height: '100%',
+                          backgroundColor: 'var(--primary-blue)'
+                        }} />
+                      )}
+                      
                       <div style={{
-                        width: '22px', height: '22px', borderRadius: '6px',
-                        border: `2px solid ${isSelected ? 'var(--primary-blue)' : 'var(--text-gray)'}`,
-                        backgroundColor: isSelected ? 'var(--primary-blue)' : 'transparent',
+                        width: '24px', height: '24px', borderRadius: '6px',
+                        border: `2px solid ${isSelected ? 'var(--primary-blue)' : '#94a3b8'}`,
+                        backgroundColor: isSelected ? 'var(--primary-blue)' : '#fff',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        flexShrink: 0, marginTop: '2px'
+                        flexShrink: 0,
+                        transition: 'all 0.2s'
                       }}>
-                        {isSelected && <Check size={16} color="#fff" strokeWidth={3} />}
+                        {isSelected && <Check size={16} color="#fff" strokeWidth={4} />}
                       </div>
-                      <div>
-                        <h4 style={{ fontSize: '15px', fontWeight: 700, color: isSelected ? 'var(--primary-blue)' : 'var(--text-dark)' }}>
+                      
+                      <div style={{ flex: 1 }}>
+                        <h4 style={{ 
+                          fontSize: '16px', 
+                          fontWeight: isSelected ? 700 : 600, 
+                          color: isSelected ? 'var(--primary-blue)' : 'var(--text-dark)',
+                          margin: 0,
+                          lineHeight: '1.2'
+                        }}>
                           {svc.service_name}
                         </h4>
-                        <p style={{ fontSize: '12px', color: 'var(--text-gray)', marginTop: '6px', lineHeight: 1.5 }}>
-                          {/* {svc.rate ? `Rate: ₹${svc.rate}` : 'Service configured by Operations'} */}
-                        </p>
                       </div>
                     </div>
                   );

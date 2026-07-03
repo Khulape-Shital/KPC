@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { 
-  BadgeIndianRupee, CreditCard, Banknote, AlertCircle, 
+import {
+  BadgeIndianRupee, CreditCard, Banknote, AlertCircle,
   Clock, Users, TrendingUp, Lock, CheckCircle2, XCircle, BarChart3, PieChart, ArrowUpRight, ChevronRight
 } from 'lucide-react';
 import { mockDb } from '../../utils/mockDb';
@@ -100,7 +100,7 @@ export const AccountantDashboard = () => {
   const agingBuckets = useMemo(() => {
     const currentDate = new Date('2026-06-15'); // Fixed system date for demo consistency
     const buckets = { '0_30': 0, '31_60': 0, '61_90': 0, '90_plus': 0 };
-    
+
     invoicedInvoices.forEach(inv => {
       const paid = (inv.paymentAllocations || []).reduce((sum, alloc) => sum + alloc.amount, 0);
       const outstanding = inv.totalAmount - paid;
@@ -127,10 +127,8 @@ export const AccountantDashboard = () => {
   const serviceRevenue = useMemo(() => {
     const serviceMap = {
       'Police Verification': 0,
-      'Address Verification': 0,
-      'Identity Verification': 0,
       'Background Verification': 0,
-      'Other Services': 0
+
     };
     invoicedInvoices.forEach(inv => {
       let type = inv.serviceType;
@@ -202,15 +200,15 @@ export const AccountantDashboard = () => {
   const handleApprove = (id) => {
     const inv = invoices.find(i => i.id === id);
     if (!inv) return;
-    
+
     const updatedTimeline = [
       ...(inv.timeline || []),
       { date: new Date().toISOString(), event: 'Invoice Approved', details: 'Approved by Finance Accountant' },
       { date: new Date().toISOString(), event: 'Invoice Generated', details: `KPC-INV Number assigned: ${id}` }
     ];
-    
+
     // In our workflow, approving an invoice shifts it to generated/sent
-    mockDb.updateInvoice(id, { 
+    mockDb.updateInvoice(id, {
       status: 'generated',
       timeline: updatedTimeline
     });
@@ -227,14 +225,14 @@ export const AccountantDashboard = () => {
   const handleReject = (id) => {
     const inv = invoices.find(i => i.id === id);
     if (!inv) return;
-    
+
     const updatedTimeline = [
       ...(inv.timeline || []),
       { date: new Date().toISOString(), event: 'Invoice Rejected', details: 'Returned to Draft by Accountant' }
     ];
-    
+
     // In our workflow, rejection returns it to Draft
-    mockDb.updateInvoice(id, { 
+    mockDb.updateInvoice(id, {
       status: 'draft',
       timeline: updatedTimeline
     });
@@ -254,7 +252,7 @@ export const AccountantDashboard = () => {
       alert('The current period is already locked.');
       return;
     }
-    
+
     // Validate: Ensure no invoices are in pending_approval
     if (pendingApprovalsCount > 0) {
       alert(`Cannot close period: there are ${pendingApprovalsCount} invoices pending approval.`);
@@ -269,7 +267,7 @@ export const AccountantDashboard = () => {
     };
 
     mockDb.saveFinancialClosing(nextPeriod);
-    
+
     mockDb.addFinancialActivity({
       event: 'Financial Close',
       desc: 'June 2026 period closed & locked',
@@ -282,7 +280,7 @@ export const AccountantDashboard = () => {
 
   return (
     <div className="page-container" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px', animation: 'fadeIn 0.5s ease-out' }}>
-      
+
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
@@ -292,8 +290,8 @@ export const AccountantDashboard = () => {
           </p>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button 
-            className="btn btn-outline" 
+          <button
+            className="btn btn-outline"
             onClick={handleMonthEndClose}
             style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: closing.closingStatus === 'Locked' ? 0.6 : 1 }}
           >
@@ -374,13 +372,13 @@ export const AccountantDashboard = () => {
           <svg viewBox="0 0 1000 220" width="100%" height="100%" preserveAspectRatio="none">
             {/* Grid Lines */}
             {[0, 0.25, 0.5, 0.75, 1].map((ratio, idx) => (
-              <line 
-                key={idx} 
-                x1="40" 
-                y1={20 + (160 * (1 - ratio))} 
-                x2="980" 
-                y2={20 + (160 * (1 - ratio))} 
-                stroke="#f1f5f9" 
+              <line
+                key={idx}
+                x1="40"
+                y1={20 + (160 * (1 - ratio))}
+                x2="980"
+                y2={20 + (160 * (1 - ratio))}
+                stroke="#f1f5f9"
                 strokeWidth="1.5"
               />
             ))}
@@ -396,31 +394,31 @@ export const AccountantDashboard = () => {
               return (
                 <g key={idx}>
                   {/* Invoiced Bar */}
-                  <rect 
-                    x={xBase} 
-                    y={yInvoice} 
-                    width="26" 
-                    height={Math.max(invoiceHeight, 2)} 
-                    fill="#3b82f6" 
+                  <rect
+                    x={xBase}
+                    y={yInvoice}
+                    width="26"
+                    height={Math.max(invoiceHeight, 2)}
+                    fill="#3b82f6"
                     rx="3"
                   />
                   {/* Collected Bar */}
-                  <rect 
-                    x={xBase + 30} 
-                    y={yCollected} 
-                    width="26" 
-                    height={Math.max(collectedHeight, 2)} 
-                    fill="#10b981" 
+                  <rect
+                    x={xBase + 30}
+                    y={yCollected}
+                    width="26"
+                    height={Math.max(collectedHeight, 2)}
+                    fill="#10b981"
                     rx="3"
                   />
-                  
+
                   {/* Labels */}
-                  <text 
-                    x={xBase + 28} 
-                    y="202" 
-                    textAnchor="middle" 
-                    fill="#64748b" 
-                    fontSize="11" 
+                  <text
+                    x={xBase + 28}
+                    y="202"
+                    textAnchor="middle"
+                    fill="#64748b"
+                    fontSize="11"
                     fontWeight="500"
                   >
                     {m.label}
@@ -437,7 +435,7 @@ export const AccountantDashboard = () => {
 
       {/* Analytics Row */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
-        
+
         {/* Outstanding Aging Buckets */}
         <div className="card" style={{ padding: '24px', backgroundColor: '#fff', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -516,10 +514,10 @@ export const AccountantDashboard = () => {
 
       {/* Bottom Layout Row: Approval Center, Top Clients, Closing, Feed */}
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
-        
+
         {/* Left Hand side: Approvals & Top Clients */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          
+
           {/* Approval Center */}
           <div className="card" style={{ backgroundColor: '#fff', overflow: 'hidden', display: 'flex', flexDirection: 'column', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
             <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -559,16 +557,16 @@ export const AccountantDashboard = () => {
                         <td style={{ padding: '16px 24px', fontSize: '13px', fontWeight: 700, color: 'var(--text-dark)' }}>{formatCurrency(inv.totalAmount)}</td>
                         <td style={{ padding: '16px 24px', textAlign: 'right' }}>
                           <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-                            <button 
+                            <button
                               onClick={() => handleApprove(inv.id)}
-                              className="btn btn-outline" 
+                              className="btn btn-outline"
                               style={{ padding: '6px 12px', fontSize: '12px', borderColor: '#10b981', color: '#10b981', backgroundColor: '#f0fdf4' }}
                             >
                               Approve
                             </button>
-                            <button 
+                            <button
                               onClick={() => handleReject(inv.id)}
-                              className="btn btn-outline" 
+                              className="btn btn-outline"
                               style={{ padding: '6px 12px', fontSize: '12px', borderColor: '#ef4444', color: '#ef4444', backgroundColor: '#fef2f2' }}
                             >
                               Reject
@@ -613,7 +611,7 @@ export const AccountantDashboard = () => {
 
         {/* Right Hand side: Closing & Activity Feed */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          
+
           {/* Financial Closing Widget */}
           <div className="card" style={{ padding: '24px', backgroundColor: '#f8fafc', border: '1px solid var(--border-color)', borderRadius: '8px' }}>
             <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>

@@ -5,8 +5,8 @@ import {
   AlertCircle, CheckCircle, Clock3, MessageSquare, AlertTriangle, User,
   Calendar, FileText, ChevronRight, Activity
 } from 'lucide-react';
-// import { mockDb } from '../../utils/mockDb';
 import { getSupabaseEmployees } from '../../utils/supabase';
+import PageHeader from '../../components/common/PageHeader';
 const TRACKING_COLUMNS = [
   // { id: 'submitted', title: 'Submitted', color: '#6366f1' },
   { id: 'assigned', title: 'Assigned', color: '#8b5cf6' },
@@ -140,11 +140,11 @@ export const VerificationTracking = () => {
       {/* Header & View Toggle */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h1 style={{ fontSize: '35px', fontWeight: 700, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Activity size={24} color="var(--primary-blue)" />
-            Verification Tracking
-          </h1>
-          <p style={{ color: 'var(--text-gray)', marginTop: '4px', fontSize: '20px' }}>Real-time read-only monitoring workspace</p>
+          <PageHeader 
+            title="Verification Tracking"
+            subtitle="Real-time read-only monitoring workspace"
+            icon={Activity}
+          />
         </div>
 
         <div style={{ display: 'flex', background: 'var(--bg-secondary)', padding: '4px', borderRadius: '8px', border: '1px solid var(--border-color)' }}>

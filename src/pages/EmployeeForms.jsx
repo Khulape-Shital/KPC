@@ -427,7 +427,7 @@ export const EmployeeForms = () => {
               <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid var(--border-color)' }}>
                 <th style={{ padding: '12px 16px' }}><input type="checkbox" onChange={handleSelectAll} checked={selectedRows.length === filteredData.length && filteredData.length > 0} /></th>
                 <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>EMPLOYEE</th>
-                <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>PRIORITY & SLA</th>
+                <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>SLA</th>
                 <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>DOCUMENTS</th>
                 <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>ASSIGNMENT</th>
                 <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 600, color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>STATUS</th>
@@ -444,7 +444,6 @@ export const EmployeeForms = () => {
                   </td>
                   <td style={{ padding: '12px 16px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-start' }}>
-                      <span style={{ fontSize: '13px', fontWeight: 600, color: getPriorityColor(row.priority) }}>{row.priority}</span>
                       <span style={{ fontSize: '11px', padding: '2px 6px', borderRadius: '4px', backgroundColor: getSlaColor(row.sla), color: getSlaTextColor(row.sla), fontWeight: 500 }}>{row.sla}</span>
                     </div>
                   </td>
@@ -522,7 +521,7 @@ export const EmployeeForms = () => {
 
       {/* Employee Details Drawer/Modal */}
       {modalData && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 50, display: 'flex', justifyContent: 'flex-end' }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', zIndex: 50, display: 'flex', justifyContent: 'flex-end' }}>
           <div style={{ width: '600px', backgroundColor: '#fff', height: '100%', boxShadow: '-4px 0 15px rgba(0,0,0,0.1)', display: 'flex', flexDirection: 'column' }}>
 
             <div style={{ padding: '24px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
